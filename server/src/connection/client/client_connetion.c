@@ -32,6 +32,7 @@ static bool new_client_player_one(server_t *server, client_t *client)
         printf("Server, player 1, accept fail");
         return (false);
     }
+    init_player_one(client);
     return (true);
 }
 
@@ -42,6 +43,7 @@ static bool new_client_player_two(server_t *server, client_t *client)
         printf("Server, player 3, accept fail");
         return (false);
     }
+    init_player_two(client);
     return (true);
 }
 
