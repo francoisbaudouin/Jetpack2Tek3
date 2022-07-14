@@ -31,6 +31,4 @@ tests_run:
 	$(MAKE) -C tests/
 	./tests/tests_units_tests
 
-debug:  CFLAGS += -g
-
 .PHONY	:	all clean fclean re client server
