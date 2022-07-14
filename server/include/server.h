@@ -24,6 +24,7 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
+int network_configuration(char *port, server_t *server);
 
 typedef struct player_s {
     int socket_fd;
@@ -32,6 +33,7 @@ typedef struct player_s {
     bool ready;
     size_t pos_x;
     size_t pos_y;
+    size_t money;
 } player_t;
 
 typedef struct client_s {
@@ -45,8 +47,10 @@ typedef struct server_s {
     fd_set wfds;
     fd_set tmp_rfds;
     fd_set tmp_wfds;
+    socklen_t socket_size;
     int socket_fd_server;
     struct sockaddr_in socket_addr;
+    char **map;
     /* data */
 } server_t;
 

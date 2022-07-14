@@ -24,17 +24,9 @@ int network_configuration(char *port, server_t *server)
         close(server->socket_fd_server);
         return (-1);
     }
+    server->socket_size = sizeof(struct sockaddr);
     bzero(&server->socket_addr, sizeof(server->socket_addr));
     FD_SET(server->socket_fd_server, &server->rfds);
     listen(server->socket_fd_server, MAX_CONNECTION);
-    return (0);
-}
-
-int main(int ac, char **argv)
-{
-    server_t *server;
-    if (ac != 7)
-        return(84);
-    network(argv[1], server);
     return (0);
 }

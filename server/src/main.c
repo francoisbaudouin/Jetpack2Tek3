@@ -6,9 +6,14 @@
 */
 
 #include <stdio.h>
+#include "server.h"
 
-int main(void) 
+int main(char *av, int *ac) 
 {
-    printf("Hello from server");
-    return 84;
+    client_t *client;
+    server_t *server;
+    
+    network_configuration(av[2], server);
+
+    return (0);
 }
