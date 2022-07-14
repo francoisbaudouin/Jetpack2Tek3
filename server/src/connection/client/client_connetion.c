@@ -40,7 +40,7 @@ static bool new_client_player_two(server_t *server, client_t *client)
 {
     client->p2.socket_fd = accept(server->socket_fd_server, &server->socket_addr, server->socket_size);
     if (client->p2.socket_fd == -1) {
-        printf("Server, player 3, accept fail");
+        printf("Server, player 2, accept fail");
         return (false);
     }
     init_player_two(client);
@@ -50,10 +50,16 @@ static bool new_client_player_two(server_t *server, client_t *client)
 
 bool new_client_connection(server_t *server, client_t *client)
 {
-    if (client->nb_player == 0) {
-        
+    switch (client->nb_player) {
+    case (0):
+        if (new_client_player_two(server, client) == false)
+            return (false);
+        break;
+    case (1):
+        if (new_client_player_two(server, client) == false)
+            return (false);
+    default:
+        break;
     }
-    if (client->nb_player == 1) {
-        client->p2.socket_fd = accept(server->socket_fd_server, &server->socket_addr, server->socket_size);
-    }
+    return (true);
 }
