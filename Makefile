@@ -8,22 +8,22 @@
 all: client server
 
 client:
-	make -C client/
-	cp ./client/clientJ2T3 .
+	make -C client/ all
+	cp client/clientJ2T3 ./
 
 server:
-	make -C server/
-	cp ./client/serverJ2T3 .
+	make -C server/ all
+	cp server/serverJ2T3 ./
 
 clean:
+	make -C client/ clean
 	make -C server/ clean
-	make -C clent/ clean
 	rm clientJ2T3
 	rm serverJ2T3
 
 fclean: clean
 	make -C server/ fclean
-	make -C clent/ fclean
+	make -C client/ fclean
 
 re:	fclean all
 
@@ -33,4 +33,4 @@ tests_run:
 
 debug:  CFLAGS += -g
 
-.PHONY	:	all clean fclean re
+.PHONY	:	all clean fclean re client server
