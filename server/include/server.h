@@ -41,7 +41,12 @@ typedef struct client_s {
 } client_t;
 
 typedef struct server_s {
-    int socket_server;
+    fd_set rfds;
+    fd_set wfds;
+    fd_set tmp_rfds;
+    fd_set tmp_wfds;
+    int socket_fd_server;
+    struct sockaddr_in socket_addr;
     /* data */
 } server_t;
 

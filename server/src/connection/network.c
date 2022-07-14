@@ -7,35 +7,33 @@
 
 #include "server.h"
 
-int network(char *port)
+int network_configuration(char *port, server_t *server)
 {
-    int socketfd = socket(AF_INET, SOCK_STREAM, 
+    server->socket_fd_server = socket(AF_INET, SOCK_STREAM,
         getprotobyname("tcp")->p_proto);
-    struct sockaddr_in sock;
-
-    sock.sin_family = AF_INET;
-    sock.sin_port = htons(atoi(port));
-    sock.sin_addr.s_addr = htonl(INADDR_ANY);
-    if (socketfd == -1) {
+    server->socket_addr.sin_family = AF_INET;
+    server->socket_addr.sin_port = htons(atoi(port));
+    server->socket_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+    if (server->socket_fd_server == -1) {
         printf("socket connexion failed\n");
-        close(socketfd);
+        close(server->socket_fd_server);
         return (-1);
     }
-    if (bind(socketfd, (struct sockaddr *) &sock, sizeof(sock)) != 0) {
+    if (bind(server->socket_fd_server, (struct sockaddr *) &server->socket_addr, sizeof(server->socket_addr)) != 0) {
         printf("Error bind");
-        close(socketfd);
+        close(server->socket_fd_server);
         return (-1);
     }
-    listen(socketfd, MAX_CONNECTION);
-    accept_connexion(socketfd, sock);
-    close(socketfd);
+    FD_SET(server->socket_fd_server, &server->rfds);
+    listen(server->socket_fd_server, MAX_CONNECTION);
     return (0);
 }
 
 int main(int ac, char **argv)
 {
-    if (ac != 2)
+    server_t *server;
+    if (ac != 7)
         return(84);
-    network(argv[1]);
+    network(argv[1], server);
     return (0);
 }
