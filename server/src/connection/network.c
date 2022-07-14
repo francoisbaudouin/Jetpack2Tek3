@@ -24,6 +24,7 @@ int network_configuration(char *port, server_t *server)
         close(server->socket_fd_server);
         return (-1);
     }
+    bzero(&server->socket_addr, sizeof(server->socket_addr));
     FD_SET(server->socket_fd_server, &server->rfds);
     listen(server->socket_fd_server, MAX_CONNECTION);
     return (0);
