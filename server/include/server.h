@@ -41,7 +41,7 @@ typedef struct client_s {
 } client_t;
 
 typedef struct map_s {
-    char *map;
+    char **map;
     int width;
     int high;
     int cells;

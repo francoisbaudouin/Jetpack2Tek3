@@ -16,7 +16,23 @@
 
 #define COIN 'c'
 #define ELECTRIC_FENCE 'e'
-#define EMPTY_SPCE ' '
+#define EMPTY_SPACE ' '
+
+static void store_map(server_t *server, char *line, size_t len)
+{
+    
+}
+
+static bool is_good_character(char c)
+{
+    if (c != EMPTY_SPACE
+        || c != COIN
+        || c != ELECTRIC_FENCE
+        || c != '\n'
+        || c != '\0')
+        return (false);
+    return (true);
+}
 
 static void load_file_in_mem(server_t *server, char const *filepath)
 {
