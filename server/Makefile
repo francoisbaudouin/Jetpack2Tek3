@@ -5,7 +5,8 @@
 ## Makefile
 ##
 
-MAIN	=	src/main.c
+MAIN	=	src/main.c \
+			src/connection/network.c \
 
 SRC	=
 

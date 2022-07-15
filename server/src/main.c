@@ -8,12 +8,26 @@
 #include <stdio.h>
 #include "server.h"
 
-int main(char *av, int *ac) 
+static void message_not_enough_arguments()
+{
+    printf("USAGE:\n");
+    printf("\t./serverJ2T3 -p <port> -g <gravity> -m <map>\n");
+}
+
+int main(int ac, char **av) 
 {
     client_t *client;
-    server_t *server;
-    
-    network_configuration(av[2], server);
+    server_t *server = malloc(sizeof(server_t));
+    (void) client;
 
+    if (ac != 7) {
+        printf("not enough arguments\n");
+        message_not_enough_arguments();
+        return (84);
+    }
+
+    if (network_configuration(av[2], server) == false)
+        return (84);
+    free(server);
     return (0);
 }

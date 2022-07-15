@@ -24,8 +24,6 @@
 #include <arpa/inet.h>
 #include <stdbool.h>
 
-int network_configuration(char *port, server_t *server);
-
 typedef struct player_s {
     int socket_fd;
     int id;
@@ -51,8 +49,8 @@ typedef struct server_s {
     int socket_fd_server;
     struct sockaddr_in socket_addr;
     char **map;
-    /* data */
 } server_t;
 
+bool network_configuration(char *port, server_t *server);
 
 #endif /* !SERVER_H_ */
