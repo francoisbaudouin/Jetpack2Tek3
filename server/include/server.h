@@ -40,6 +40,13 @@ typedef struct client_s {
     int nb_player;
 } client_t;
 
+typedef struct map_s {
+    char *map;
+    int width;
+    int high;
+    int cells;
+} map_t;
+
 typedef struct server_s {
     fd_set rfds;
     fd_set wfds;
@@ -48,7 +55,7 @@ typedef struct server_s {
     socklen_t socket_size;
     int socket_fd_server;
     struct sockaddr_in socket_addr;
-    char **map;
+    map_t *map;
     int gravity;
     int port;
 } server_t;

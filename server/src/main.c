@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "server.h"
 
-static void message_not_enough_arguments()
+static void message_not_enough_arguments(void)
 {
     printf("USAGE:\n");
     printf("\t./serverJ2T3 -p <port> -g <gravity> -m <map>\n");

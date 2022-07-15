@@ -32,4 +32,5 @@ bool check_error_arguments(server_t *server, char **av)
     if (check_port_argument(server, av) == false
         || check_gravity_argument(server, av) == false)
         return (false);
+    return (true);
 }
