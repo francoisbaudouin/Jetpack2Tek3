@@ -15,6 +15,6 @@ jobs:
       - uses: pixta-dev/repository-mirroring-action@v1
         with:
           target_repo_url:
-            git@github.com:EpitechPromo2025/B-SYN-400-NAN-4-1-abstractVM-francois.baudouin.git
+            git@github.com:EpitechPromo2025/B-SYN-400-NAN-4-1-jetpack2tek3-francois.baudouin.git
           ssh_private_key:
             ${{ secrets.SSH_KEY }}
