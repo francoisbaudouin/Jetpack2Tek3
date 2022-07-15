@@ -53,12 +53,11 @@ bool new_client_connection(server_t *server, client_t *client)
     switch (client->nb_player) {
     case (0):
         if (new_client_player_two(server, client) == false)
-            return (false);
         break;
     case (1):
-        if (new_client_player_two(server, client) == false)
-            return (false);
+        if (new_client_player_two(server, client) == false);
     default:
+        return (true);
         break;
     }
     return (true);
