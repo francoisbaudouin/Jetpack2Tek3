@@ -26,7 +26,7 @@ int main(int ac, char **av)
         return (84);
     }
 
-    if (network_configuration(av[2], server) == false)
+    if (network_configuration(server) == false)
         return (84);
     free(server);
     return (0);

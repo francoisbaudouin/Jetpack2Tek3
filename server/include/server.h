@@ -49,8 +49,10 @@ typedef struct server_s {
     int socket_fd_server;
     struct sockaddr_in socket_addr;
     char **map;
+    int gravity;
+    int port;
 } server_t;
 
-bool network_configuration(char *port, server_t *server);
+bool network_configuration(server_t *server);
 
 #endif /* !SERVER_H_ */

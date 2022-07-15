@@ -23,12 +23,12 @@ static bool checkup_configuration(server_t *server)
     return (true);
 }
 
-bool network_configuration(char *port, server_t *server)
+bool network_configuration(server_t *server)
 {
     server->socket_fd_server = socket(AF_INET, SOCK_STREAM,
         getprotobyname("tcp")->p_proto);
     server->socket_addr.sin_family = AF_INET;
-    server->socket_addr.sin_port = htons(atoi(port));
+    server->socket_addr.sin_port = htons(server->port);
     server->socket_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     if (checkup_configuration(server) == false)
         return (false);
