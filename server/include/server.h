@@ -42,8 +42,8 @@ typedef struct client_s {
 
 typedef struct map_s {
     char **map;
-    int width;
-    int high;
+    size_t width;
+    size_t high;
     int cells;
 } map_t;
 
@@ -61,5 +61,9 @@ typedef struct server_s {
 } server_t;
 
 bool network_configuration(server_t *server);
+
+/* MAP MANAGEMENT*/
+
+bool load_map(server_t *server, char **argv);
 
 #endif /* !SERVER_H_ */

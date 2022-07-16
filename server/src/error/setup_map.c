@@ -15,11 +15,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#define COIN 'c'
-#define ELECTRIC_FENCE 'e'
-#define EMPTY_SPACE ' '
-
-static bool store_map(server_t *server, char *line, size_t len, int i)
+static bool store_map(server_t *server, char *line, int i)
 {
     server->map->map[i] = strdup(line);
     if (server->map->map[i] == NULL)
@@ -27,15 +23,15 @@ static bool store_map(server_t *server, char *line, size_t len, int i)
     return (false);
 }
 
-static bool is_good_character(char c)
+
+static bool map_cmp_width(size_t len, size_t save_len, bool first_line)
 {
-    if (c != EMPTY_SPACE
-        || c != COIN
-        || c != ELECTRIC_FENCE
-        || c != '\n'
-        || c != '\0')
-        return (false);
-    return (true);
+    if (first_line == true)  {
+        return (true);
+    }
+    if (len == save_len)
+        return (true);
+    return (false);
 }
 
 static bool load_file_in_mem(server_t *server, char const *filepath)
@@ -43,15 +39,24 @@ static bool load_file_in_mem(server_t *server, char const *filepath)
     FILE *fp = fopen(filepath, "r");
     size_t len = 0;
     char *line;
-    int i = 0;
+    size_t save_high = 0;
+    size_t save_width = 0;
+    bool first_line = true;
+
     while (getline(&line, &len, fp) != -1) {
-        if (store_map(server, line, len, i) == false)
+        if (map_cmp_width(len, save_width, first_line) == false)
             return (false);
-        i++;
+        first_line = false;
+        save_width = len;
+        if (store_map(server, line, len) == false)
+            return (false);
+        save_width++;
     }
-    (void) len;
+    server->map->high = save_high;
+    server->map->width = save_width;
     fclose(fp);
     free(line);
+    return (true);
 }
 
 bool load_map(server_t *server, char **argv)

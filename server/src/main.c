@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include "server.h"
 
+
 static void message_not_enough_arguments(void)
 {
     printf("USAGE:\n");
@@ -19,13 +20,13 @@ int main(int ac, char **av)
     client_t *client;
     server_t *server = malloc(sizeof(server_t));
     (void) client;
-
+    
     if (ac != 7) {
         printf("not enough arguments\n");
         message_not_enough_arguments();
         return (84);
     }
-
+    load_map(server, av);
     if (network_configuration(server) == false)
         return (84);
     free(server);
