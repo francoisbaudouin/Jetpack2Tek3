@@ -35,6 +35,7 @@ typedef struct player {
     sfTexture *texture;
     sfIntRect rect;
     sfVector2f pos;
+    bool alive;
 } player_t;
 
 typedef struct background {
@@ -50,6 +51,7 @@ typedef struct obstacle {
     sfTexture *texture;
     sfVector2f pos;
     sfVector2f scale;
+    bool drawable;
 } obstacle_t;
 
 typedef struct game_object_s{
@@ -58,8 +60,6 @@ typedef struct game_object_s{
     struct player Enemy;
     sfClock *clock;
     sfTime time;
-    bool alive;
-    bool drawable;
 }game_object_t;
 
 typedef struct window_s
@@ -69,6 +69,24 @@ typedef struct window_s
     sfEvent event;
 }window_t;
 
+int game(char *av);
+void jump_player(game_object_t *game_object, sfVector2f actual);
+void init_game(game_object_t *game_object, background_t **background, obstacle_t **obstacle, char **buffer);
+void draw_obstacle(window_t *windows, obstacle_t **obstacle);
+void event(window_t *windows, game_object_t *game_object, sfVector2f actual);
+float animated_sprite(game_object_t *game_object, sfClock *clock);
+sfVector2f gravity(sfVector2f actual, game_object_t *game_object);
+char **read_file(char *av, char **buffer);
 
+void init_coin(obstacle_t *obstacle);
+void init_zap(obstacle_t *obstacle);
+void init_background(background_t **background);
+void init_start(background_t *background);
+
+void check_obstacle(obstacle_t **obstacle, int nbr, int i, int j);
+int check_type_obstacle(obstacle_t **obstacle, char **buffer, int i, int nbr);
+void init_obstacle(obstacle_t **obstacle, char **buffer);
+int init_window(window_t *windows);
+player_t init_player(player_t player, sfIntRect playerRect, sfVector2i playerPos);
 
 #endif /* !MY_H_ */
