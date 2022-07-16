@@ -8,16 +8,14 @@
 #include "server.h"
 #define COIN 'c'
 #define ELECTRIC_FENCE 'e'
-#define EMPTY_SPACE ' '
+#define EMPTY_SPACE '_'
 
-static bool is_good_character(char *line, size_t len)
+bool is_good_character(char *line)
 {
-    for (size_t i = 0; i < len; i++)
-        if (line[i] != EMPTY_SPACE
-            || line[i] != COIN
-            || line[i] != ELECTRIC_FENCE
-            || line[i] != '\n'
-            || line[i] != '\0')
+    for (size_t i = 0; line[i] != '\n' && line[i] != '\0'; i++) {
+        if (line[i] != COIN && line[i] != ELECTRIC_FENCE && line[i] != EMPTY_SPACE) {
             return (false);
+        }
+    }
     return (true);
 }

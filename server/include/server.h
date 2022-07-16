@@ -65,5 +65,6 @@ bool network_configuration(server_t *server);
 /* MAP MANAGEMENT*/
 
 bool load_map(server_t *server, char **argv);
+bool is_good_character(char *line);
 
 #endif /* !SERVER_H_ */

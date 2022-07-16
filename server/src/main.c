@@ -12,7 +12,7 @@
 static void message_not_enough_arguments(void)
 {
     printf("USAGE:\n");
-    printf("\t./serverJ2T3 -p <port> -g <gravity> -m <map>\n");
+    printf("\t./serverJ2T3 [-p <port> |-g <gravity> | -m <map>]\n");
 }
 
 int main(int ac, char **av) 
@@ -26,7 +26,9 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
-    load_map(server, av);
+    if (load_map(server, av) == false)
+        return (84);
+
     if (network_configuration(server) == false)
         return (84);
     free(server);
