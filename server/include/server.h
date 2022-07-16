@@ -60,6 +60,9 @@ typedef struct server_s {
     int port;
 } server_t;
 
+/*Check error*/
+bool check_error_arguments(server_t *server, char **av);
+
 bool network_configuration(server_t *server);
 
 /* MAP MANAGEMENT*/

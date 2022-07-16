@@ -26,9 +26,13 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
+    if (check_error_arguments(server, av) == false) {
+        printf("error arguments\n");
+        message_not_enough_arguments();
+        return (84);
+    }
     if (load_map(server, av) == false)
         return (84);
-
     if (network_configuration(server) == false)
         return (84);
     free(server);

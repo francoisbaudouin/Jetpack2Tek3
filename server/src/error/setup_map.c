@@ -17,7 +17,7 @@
 
 static void get_nb_line(char const *file, server_t *server)
 {
-    int nb_line = 0;
+    size_t nb_line = 0;
     FILE *fp = fopen(file, "r");
     char *line = NULL;
     size_t len = 0;
@@ -30,13 +30,13 @@ static void get_nb_line(char const *file, server_t *server)
     server->map->high = nb_line;
 }
 
-static bool store_map(server_t *server, char *line, size_t i)
+static bool store_map(server_t *server, char *line, size_t len ,size_t i)
 {
     if (is_good_character(line) == false) {
         return (false);
     }
     server->map->map[i] = strdup(line);
-    printf("%s\n", server->map->map[i]);
+    puts(server->map->map[i]);
     if (server->map->map[i] == NULL)
         return (false);
     return (true);
@@ -59,19 +59,21 @@ static bool load_file(server_t *server, char const *filepath)
     char *line;
     size_t save_width = 0;
     bool first_line = true;
+    int end = 0;
 
     if (fp == NULL)
         return (false);
-    printf("%zu\n", server->map->high);
+    get_nb_line(filepath, server);
     server->map->map = malloc(sizeof(char *) * (server->map->high + 1));
-    while (getline(&line, &len, fp) == -1) {
-        if (map_cmp_width(len, save_width, first_line) == false) {
-            printf("Map have different width\n");
-            return (false);
-        }
+    while (true) {
+        end = getline(&line, &len, fp);
+        if (end == -1)
+            break;
+        /* if (map_cmp_width(len, save_width, first_line) == false) 
+            return (false); */
         first_line = false;
         save_width = len;
-        if (store_map(server, line, save_width) == false)
+        if (store_map(server, line, len, save_width) == false)
             return (false);
         free(line);
 
