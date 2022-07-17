@@ -31,9 +31,10 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
-    if (check_error_arguments(server, av) == false) {
+
+    server = check_error_arguments(server, av);
+    if (server == false) {
         printf("error arguments\n");
-        message_not_enough_arguments();
         return (84);
     }
 

@@ -61,7 +61,7 @@ typedef struct server_s {
 } server_t;
 
 /*Check error*/
-bool check_error_arguments(server_t *server, char **av);
+server_t *check_error_arguments(server_t *server, char **av);
 
 bool network_configuration(server_t *server);
 
