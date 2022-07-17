@@ -14,18 +14,6 @@ typedef struct commands {
 	void (*ptr)();
 } command_t;
 
-command_t commands[] {
-	{"ID",},
-	{"MAP",},
-	{"READY",},
-	{"FIRE",},
-	{"START",},
-	{"PLAYER",},
-	{"COIN",},
-	{"FINISH",},
-	{"0", NULL}
-};
-
 void id(server_t *server);
 void map(server_t *server);
 void ready(server_t *server);

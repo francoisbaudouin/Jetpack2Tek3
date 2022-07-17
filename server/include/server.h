@@ -58,6 +58,7 @@ typedef struct server_s {
     map_t *map;
     int gravity;
     int port;
+    bool server_running;
 } server_t;
 
 /*Check error*/
