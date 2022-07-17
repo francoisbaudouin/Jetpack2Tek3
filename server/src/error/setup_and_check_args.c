@@ -29,6 +29,7 @@ static bool check_gravity_argument(server_t *server, char **argv)
 
 bool check_error_arguments(server_t *server, char **av)
 {
+    server = malloc(sizeof(server_t));
     if (check_port_argument(server, av) == false
         || check_gravity_argument(server, av) == false)
         return (false);

@@ -18,7 +18,7 @@ static void message_not_enough_arguments(void)
 int main(int ac, char **av) 
 {
     client_t *client;
-    server_t *server = malloc(sizeof(server_t));
+    server_t server;
     (void) client;
     
     if (ac != 7) {
@@ -26,15 +26,17 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
-    if (check_error_arguments(server, av) == false) {
+    if (check_error_arguments(&server, av) == false) {
         printf("error arguments\n");
         message_not_enough_arguments();
         return (84);
     }
-    if (load_map(server, av) == false)
+    if (load_map(&server, av) == false)
         return (84);
-    if (network_configuration(server) == false)
+
+    printf("nb %ln\n", &server.map->high);
+
+    if (network_configuration(&server) == false)
         return (84);
-    free(server);
     return (0);
 }

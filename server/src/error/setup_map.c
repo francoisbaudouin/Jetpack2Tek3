@@ -69,14 +69,12 @@ static bool load_file(server_t *server, char const *filepath)
         end = getline(&line, &len, fp);
         if (end == -1)
             break;
-        /* if (map_cmp_width(len, save_width, first_line) == false) 
-            return (false); */
+        if (map_cmp_width(len, save_width, first_line) == false) 
+            return (false);
         first_line = false;
         save_width = len;
         if (store_map(server, line, len, save_width) == false)
             return (false);
-        free(line);
-
     }
     server->map->width = save_width;
     fclose(fp);
