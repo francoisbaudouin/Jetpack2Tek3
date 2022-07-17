@@ -23,7 +23,7 @@ static bool checkup_configuration(server_t *server)
     return (true);
 }
 
-bool network_configuration(server_t *server)
+server_t *network_configuration(server_t *server)
 {
     server->socket_fd_server = socket(AF_INET, SOCK_STREAM,
         getprotobyname("tcp")->p_proto);
@@ -31,10 +31,10 @@ bool network_configuration(server_t *server)
     server->socket_addr.sin_port = htons(server->port);
     server->socket_addr.sin_addr.s_addr = htonl(INADDR_ANY);
     if (checkup_configuration(server) == false)
-        return (false);
+        return (NULL);
     server->socket_size = sizeof(struct sockaddr);
     bzero(&server->socket_addr, sizeof(server->socket_addr));
     FD_SET(server->socket_fd_server, &server->rfds);
     listen(server->socket_fd_server, MAX_CONNECTION);
-    return (true);
+    return (server);
 }

@@ -42,8 +42,9 @@ int main(int ac, char **av)
     server = load_map(server, av);
     if (server == NULL)
         return (84);
-
-    if (network_configuration(server) == false)
+    server = network_configuration(server);
+    if ( server == false)
         return (84);
+    free(server);
     return (0);
 }
