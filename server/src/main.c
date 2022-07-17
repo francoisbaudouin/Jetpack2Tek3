@@ -43,8 +43,6 @@ int main(int ac, char **av)
     if (server == NULL)
         return (84);
 
-    printf("nb %ld\n", server->map->high);
-
     if (network_configuration(server) == false)
         return (84);
     return (0);
