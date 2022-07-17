@@ -36,8 +36,15 @@ int collisions(player_t player, obstacle_t **obstacle, window_t *windows)
         if (pos2a.x < pos2b.x + size2.x &&
             pos2a.x + size1.x > pos2b.x &&
             pos2a.y < pos2b.y + size2.y &&
-            size1.y + pos2a.y > pos2b.y && obstacle[i]->entity == LASER)
+            size1.y + pos2a.y > pos2b.y && obstacle[i]->entity == LASER) {
             return (-1);
+        } else if ((pos2a.x < pos2b.x + size2.x &&
+            pos2a.x + size1.x > pos2b.x &&
+            pos2a.y < pos2b.y + size2.y &&
+            size1.y + pos2a.y > pos2b.y) && obstacle[i]->entity == COIN) {
+                obstacle[i]->drawable = false;
+            return (0);
+        }
         i++;
     }
     return (0);

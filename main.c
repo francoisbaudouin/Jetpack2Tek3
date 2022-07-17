@@ -69,21 +69,9 @@ void draw_obstacle(window_t *windows, obstacle_t **obstacle)
 {
     for (size_t i = 0; obstacle[i]; i++)
     {
-        sfRenderWindow_drawSprite(windows->window, obstacle[i]->sprite, NULL);
+        if (obstacle[i]->drawable == true)
+            sfRenderWindow_drawSprite(windows->window, obstacle[i]->sprite, NULL);
     }
-}
-
-void init_game(game_object_t *game_object, background_t **background, obstacle_t **obstacle, char **buffer)
-{
-    sfIntRect playerRect = {0, 8, 100, 100};
-    sfVector2i playerPos = {100, 540};
-    game_object->Actual = init_player(game_object->Actual, playerRect, playerPos);
-    game_object->state = WALK;
-
-    background[0] = malloc(sizeof(background_t));
-    init_start(background[0]);
-    init_background(background);
-    init_obstacle(obstacle, buffer);
 }
 
 void jump_player(game_object_t *game_object, sfVector2f actual)
@@ -122,8 +110,8 @@ int game(char *av)
         actual = gravity(actual, game_object);
         event(windows, game_object, actual);
         for (size_t i = 0; background[i]; i++) {
-            if (background[i]->pos.x <= -1500 && i > 0)
-                background[i]->pos.x = 1400 * 2;
+            if (background[i]->pos.x <= -1990 && i > 0)
+                background[i]->pos.x = 1250 * 2;
             background[i]->pos.x -= 1;
             sfSprite_setPosition(background[i]->sprite, background[i]->pos);
         }
@@ -140,10 +128,10 @@ int game(char *av)
             game_object->Actual.alive = false;
         }
         // sfRenderWindow_drawSprite(windows->window, background[0]->sprite, NULL);
-        for (size_t i = 0; background[i]; i++)
-        {
-            sfRenderWindow_drawSprite(windows->window, background[i]->sprite, NULL);
-        }
+        // for (size_t i = 0; background[i]; i++)
+        // {
+        //     sfRenderWindow_drawSprite(windows->window, background[i]->sprite, NULL);
+        // }
         draw_obstacle(windows, obstacle);
         
         sfRenderWindow_drawSprite(windows->window, game_object->Actual.sprite, NULL);

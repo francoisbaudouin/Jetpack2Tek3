@@ -45,17 +45,6 @@ void init_obstacle(obstacle_t **obstacle, char **buffer)
     obstacle[nbr] = NULL;
 }
 
-int init_window(window_t *windows)
-{
-    windows->mode.bitsPerPixel = 32;
-    windows->mode.width = 1920;
-    windows->mode.height = 1080;
-    windows->window = sfRenderWindow_create(windows->mode, "SFML window", sfResize | sfClose, NULL);
-    if (!windows->window)
-        return (-1);
-    return (0);
-}
-
 player_t init_player(player_t player, sfIntRect playerRect, sfVector2i playerPos)
 {
     player.rect.top = playerRect.top;
@@ -70,4 +59,17 @@ player_t init_player(player_t player, sfIntRect playerRect, sfVector2i playerPos
     sfSprite_setTextureRect(player.sprite, player.rect);
     sfSprite_setPosition(player.sprite, player.pos);
     return (player);
+}
+
+void init_game(game_object_t *game_object, background_t **background, obstacle_t **obstacle, char **buffer)
+{
+    sfIntRect playerRect = {0, 8, 100, 100};
+    sfVector2i playerPos = {100, 540};
+    game_object->Actual = init_player(game_object->Actual, playerRect, playerPos);
+    game_object->state = WALK;
+
+    background[0] = malloc(sizeof(background_t));
+    init_start(background[0]);
+    init_background(background);
+    init_obstacle(obstacle, buffer);
 }

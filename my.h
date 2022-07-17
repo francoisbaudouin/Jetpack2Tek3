@@ -89,4 +89,6 @@ void init_obstacle(obstacle_t **obstacle, char **buffer);
 int init_window(window_t *windows);
 player_t init_player(player_t player, sfIntRect playerRect, sfVector2i playerPos);
 
+int collisions(player_t player, obstacle_t **obstacle, window_t *windows);
+
 #endif /* !MY_H_ */
