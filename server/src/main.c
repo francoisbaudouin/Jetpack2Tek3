@@ -15,10 +15,15 @@ static void message_not_enough_arguments(void)
     printf("\t./serverJ2T3 [-p <port> |-g <gravity> | -m <map>]\n");
 }
 
+static void *init_struct_server(server_t server)
+{
+
+}
+
 int main(int ac, char **av) 
 {
     client_t *client;
-    server_t server;
+    server_t *server = malloc(sizeof(server_t));
     (void) client;
     
     if (ac != 7) {
@@ -26,17 +31,20 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
-    if (check_error_arguments(&server, av) == false) {
+    if (check_error_arguments(server, av) == false) {
         printf("error arguments\n");
         message_not_enough_arguments();
         return (84);
     }
-    if (load_map(&server, av) == false)
+
+    printf("My port %d", server->port);
+    server = load_map(server, av);
+    if (server == NULL)
         return (84);
 
-    printf("nb %ln\n", &server.map->high);
+    printf("nb %ld\n", server->map->high);
 
-    if (network_configuration(&server) == false)
+    if (network_configuration(server) == false)
         return (84);
     return (0);
 }

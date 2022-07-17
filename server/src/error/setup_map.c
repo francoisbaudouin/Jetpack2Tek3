@@ -82,11 +82,11 @@ static bool load_file(server_t *server, char const *filepath)
     return (true);
 }
 
-bool load_map(server_t *server, char **argv)
+server_t *load_map(server_t *server, char **argv)
 {
     if (strcmp(argv[5], "-m") != 0)
-        return (false);
+        return (NULL);
     server->map = malloc(sizeof(map_t));
     load_file(server, argv[6]);
-    return (true);
+    return (server);
 }
