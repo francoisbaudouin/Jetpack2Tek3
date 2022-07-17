@@ -5,7 +5,11 @@
 ## Makefile
 ##
 
-MAIN	=	src/main.c
+MAIN	=	src/main.c \
+			src/connection/network.c \
+			src/error/setup_map.c \
+			src/error/setup_and_check_args.c \
+			src/error/verify_map.c \
 
 SRC	=
 
