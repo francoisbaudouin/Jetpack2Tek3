@@ -127,11 +127,11 @@ int game(char *av)
             game_object->Actual.rect.top = 324;
             game_object->Actual.alive = false;
         }
-        // sfRenderWindow_drawSprite(windows->window, background[0]->sprite, NULL);
-        // for (size_t i = 0; background[i]; i++)
-        // {
-        //     sfRenderWindow_drawSprite(windows->window, background[i]->sprite, NULL);
-        // }
+        sfRenderWindow_drawSprite(windows->window, background[0]->sprite, NULL);
+        for (size_t i = 0; background[i]; i++)
+        {
+            sfRenderWindow_drawSprite(windows->window, background[i]->sprite, NULL);
+        }
         draw_obstacle(windows, obstacle);
         
         sfRenderWindow_drawSprite(windows->window, game_object->Actual.sprite, NULL);
