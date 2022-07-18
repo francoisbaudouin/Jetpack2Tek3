@@ -12,8 +12,9 @@ static void manage_client(server_t *server)
     list_t *client = initialization();
     if (FD_ISSET(server->socket_fd_server, &server->tmp_rfds)) {
         new_client_connection(server, client);
+    } else {
+        //check if client is connected
     }
-
 
 }
 
