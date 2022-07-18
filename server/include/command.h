@@ -12,7 +12,7 @@
 void id(server_t *server, player_t *player);
 void map(server_t *server, player_t *player);
 void ready(server_t *server, player_t *player);
-void fire(server_t *server, player_t *player);
+void fire(server_t *server, player_t *player, char *data);
 void start(server_t *server, player_t *player);
 void player(server_t *server, player_t *player);
 void coin(server_t *server, player_t *player);
