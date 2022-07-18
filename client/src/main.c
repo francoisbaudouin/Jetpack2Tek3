@@ -28,36 +28,73 @@ int check_args(int ac, char **av, client_t *client)
     return (0);
 }
 
-int server_connexion(client_t *client, char *ip, char *port)
+void id(client_t *client, char **str)
 {
-    if (connect(client->fd, (struct sockaddr *)&client->servaddr,
-    sizeof(client->servaddr)) == -1) {
-        return (-1);
-    } else {
-        dprintf(1, "connected to %s port %s", ip, port);
-        return (0);
-    }
-    return 0;
+    dprintf(client->fd, "ID\n");
+    // if (size_array(str) != 2)
+    //     return;
+    // printf("je suis dans le id : %s\n", str[1]);
 }
 
-int init_cli(client_t *client)
+int size_array(char **str)
 {
-    uint32_t ip = htonl(atoi(client->ip));
-    int port = atoi(client->port);
+    int i = 0;
+    for (i = 0; str[i] != NULL; i++);
+    return (i);
+}
 
-    client->fd = socket(AF_INET, SOCK_STREAM, 0);
-    if (!client->fd)
-        return (-1);
-    bzero(&client->servaddr, sizeof(client->servaddr));
-    if (ip <= 0 || port <= 0)
-        return (-1);
-    client->servaddr.sin_family = AF_INET;
-    client->servaddr.sin_addr.s_addr = inet_addr(client->ip);
-    client->servaddr.sin_port = htons(port);
-    if (server_connexion(client, client->ip, client->port) == -1)
-        return (-1);
-    FD_ZERO(&client->rfds);
-    return (0);
+void map(client_t *client, char **str)
+{
+    int count = size_array(str);
+    if (count != 4)
+        printf("pas asser d'arguments\n");
+    client->actual.width = atoi(str[1]);
+    client->actual.height = atoi(str[2]);
+    printf("%d\n", client->actual.width);
+    printf("%d\n", client->actual.height);
+    client->actual.map = split_string(client->actual.map, str[3], "\n"); 
+    for (int i = 0; client->actual.map[i]; i++) {
+        printf("%s\n", client->actual.map[i]);
+    }
+    // SEND TO THE CLIENT
+}
+
+void ready(client_t *client, char **str)
+{
+    int count = size_array(str);
+    if (count != 1)
+        printf("pas asser d'arguments\n");
+    client->ready = true;
+}
+
+void fire(client_t *client, char **str)
+{
+    int count = size_array(str);
+    if (count != 2)
+        printf("pas asser d'arguments\n");
+    client->fire = true;
+}
+
+static void exec_player_command(client_t *client, char **str)
+{
+// printf("exec command\n");
+    function_ptr_t commands[] = {
+        {"ID", id},
+        {"MAP", map},
+        {"READY", ready},
+        {"FIRE", fire},
+        // {"START", start},
+        // {"PLAYER", player},
+        // {"COIN", coin},
+        // {"FINISH", finish},
+        {NULL, NULL},
+    };
+
+    for (int i = 0; commands[i].key != 0; i++) {
+        if (strcmp(str[0], commands[i].key) == 0)
+            commands[i].ptr(client, str);
+    }
+
 }
 
 void get_answer(client_t *client)
@@ -95,12 +132,21 @@ int cli_to_serv(client_t *client)
 int main(int ac, char **av) 
 {
     client_t *client = malloc(sizeof(client));
+    char *buffer = strdup("MAP 8 4 ____e____c___e__c\n____e____c___e__c\n____e____c___e__c\n");
+    // char *buffer = strdup("ID puto");
+    client->ready = false;
+    client->fire = false;
+    client->start = false;
     if (check_args(ac, av, client) == -1)
         return (84);
-    if (init_cli(client) == -1) {
-        return (84);
-    }
-    cli_to_serv(client);
+    // if (init_cli(client) == -1)
+    //     return (84);
+    char **str;
+    int i = 0;
+    str = split_string(str, buffer, " ");
+    exec_player_command(client, str);
+
+    // cli_to_serv(client);
     // if (pthread_create(&client->thread, NULL, &cli_to_serv, client) != 0) {
     //     perror("pthread_create() afficher :");
     //     return (84);

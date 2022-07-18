@@ -19,15 +19,10 @@
 #include "stdbool.h"
 #include <unistd.h>
 
-typedef struct client_s
-{
-    char *port;
-    char *ip;
-    int fd;
-    struct sockaddr_in servaddr;
-    fd_set rfds;
-    pthread_t *thread;
-} client_t;
+typedef struct function_ptrs {
+    char *key;
+    void (*ptr)();
+} function_ptr_t;
 
 typedef struct player_s
 {
@@ -42,6 +37,21 @@ typedef struct player_s
     int score;
 } player_t;
 
+typedef struct client_s
+{
+    char *port;
+    char *ip;
+    int fd;
+    struct sockaddr_in servaddr;
+    fd_set rfds;
+    pthread_t *thread;
+    struct player_s actual;
+    bool ready;
+    bool fire;
+    bool start;
+} client_t;
 
+char **split_string(char **str, char *buffer, char *delimiter);
+int count_space(char *str, char delim);
 
 #endif /* !CLIENT_H_ */
