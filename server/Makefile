@@ -7,9 +7,13 @@
 
 MAIN	=	src/main.c \
 			src/connection/network.c \
+			src/connection/client/client_connetion.c \
+			src/connection/client/read_data.c \
 			src/error/setup_map.c \
 			src/error/setup_and_check_args.c \
 			src/error/verify_map.c \
+			src/list_chain_init.c \
+			src/server.c\
 
 SRC	=
 
