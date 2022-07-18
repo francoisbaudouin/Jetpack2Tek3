@@ -110,10 +110,20 @@ void get_answer(client_t *client)
     printf("%s\n", buff);
 }
 
+void send_id(client_t *client)
+{
+    send(client->fd, "ID", 3, 0);
+    dprintf(client->fd, "ID");
+}
+
 void reply_from_serv(client_t *client)
 {
-    if (FD_ISSET(client->fd, &client->rfds))
-        get_answer(client);
+    if (FD_ISSET(client->fd, &client->rfds)) {
+        printf("a\n");
+        send_id(client);
+    }
+    // if (FD_ISSET(client->fd, &client->rfds))
+    //     get_answer(client);
 }
 
 int cli_to_serv(client_t *client)
@@ -139,14 +149,14 @@ int main(int ac, char **av)
     client->start = false;
     if (check_args(ac, av, client) == -1)
         return (84);
-    // if (init_cli(client) == -1)
-    //     return (84);
-    char **str;
-    int i = 0;
-    str = split_string(str, buffer, " ");
-    exec_player_command(client, str);
+    if (init_cli(client) == -1)
+        return (84);
+    // char **str;
+    // int i = 0;
+    // str = split_string(str, buffer, " ");
+    // exec_player_command(client, str);
 
-    // cli_to_serv(client);
+    cli_to_serv(client);
     // if (pthread_create(&client->thread, NULL, &cli_to_serv, client) != 0) {
     //     perror("pthread_create() afficher :");
     //     return (84);

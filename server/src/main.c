@@ -37,7 +37,6 @@ int main(int ac, char **av)
     server = network_configuration(server);
     if ( server == false)
         return (84);
-
     running_server(server);
     free(server);
     return (0);

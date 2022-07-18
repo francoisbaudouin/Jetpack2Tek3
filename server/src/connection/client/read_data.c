@@ -10,8 +10,9 @@
 
 void id(server_t *server, player_t *play)
 {
-    printf("ID\n");
-    dprintf(play->socket_fd, "lala\n");
+    // printf("ID\n");
+    // dprintf(play->socket_fd, "lala\n");
+    printf("a\n");
     dprintf(play->socket_fd, "%i", play->id);
 }
 
@@ -53,7 +54,7 @@ static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
     command_t commands[] = {
-        {"ID\r\n", id},
+        {"ID", id},
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
@@ -77,7 +78,7 @@ void read_data_player_command(server_t *server, list_t *client)
     if (tmp == NULL)
         return;
     while (tmp != NULL ) {
-        memset(buffer, 0, 255);
+        bzero(buffer, sizeof(buffer));
         if (read(tmp->player->socket_fd, &buffer, sizeof(buffer)) == -1) {
             printf("Server, read error\n");
             return;
