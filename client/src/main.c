@@ -25,36 +25,39 @@ int check_args(int ac, char **av, client_t *client)
     }
     if (!client->port || !client->ip)
         return (-1);
+    return (0);
 }
 
 int server_connexion(client_t *client, char *ip, char *port)
 {
     if (connect(client->fd, (struct sockaddr *)&client->servaddr,
-    sizeof(client->servaddr)) != 0) {
+    sizeof(client->servaddr)) == -1) {
         return (-1);
     } else {
         dprintf(1, "connected to %s port %s", ip, port);
+        return (0);
     }
     return 0;
 }
 
 int init_cli(client_t *client)
 {
-    uint32_t uint_ip = htonl(atoi(client->ip));
-    int int_port = atoi(client->port);
+    uint32_t ip = htonl(atoi(client->ip));
+    int port = atoi(client->port);
 
     client->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (!client->fd)
         return (-1);
     bzero(&client->servaddr, sizeof(client->servaddr));
-    if (uint_ip <= 0 || int_port <= 0)
-        return -1;
+    if (ip <= 0 || port <= 0)
+        return (-1);
     client->servaddr.sin_family = AF_INET;
     client->servaddr.sin_addr.s_addr = inet_addr(client->ip);
-    client->servaddr.sin_port = htons(int_port);
-    if (connect_to_server(client, client->ip, client->port) == -1)
-        return -1;
+    client->servaddr.sin_port = htons(port);
+    if (server_connexion(client, client->ip, client->port) == -1)
+        return (-1);
     FD_ZERO(&client->rfds);
+    return (0);
 }
 
 void get_answer(client_t *client)
@@ -63,10 +66,8 @@ void get_answer(client_t *client)
     size_t size;
     FILE *stream = fdopen(client->fd, "r");
 
-    if (!stream) {
-        perror("fdopen()");
+    if (!stream)
         return;
-    }
     if (getline(&buff, &size, stream) == -1)
         return;
     printf("%s\n", buff);
@@ -83,27 +84,30 @@ int cli_to_serv(client_t *client)
     while (1) {
         FD_SET(client->fd, &client->rfds);
         if (select(FD_SETSIZE, &client->rfds, NULL, NULL, NULL) == -1) {
-            reply_from_serv(client);
-        } else
             return (-1);
+        } else {
+            reply_from_serv(client);
+        }      
     }
+    return (0);
 }
 
 int main(int ac, char **av) 
 {
     client_t *client = malloc(sizeof(client));
-
     if (check_args(ac, av, client) == -1)
         return (84);
-    if (init_cli(client) == -1)
-        return (84);
-    if (pthread_create(&client->thread, NULL, &cli_to_serv, client) != 0) {
-        perror("pthread_create() afficher :");
+    if (init_cli(client) == -1) {
         return (84);
     }
-    if (pthread_join(client->thread, NULL) != 0) {
-        perror("pthread_join() afficher :");
-        return (84);
-    }
-    return 84;
+    cli_to_serv(client);
+    // if (pthread_create(&client->thread, NULL, &cli_to_serv, client) != 0) {
+    //     perror("pthread_create() afficher :");
+    //     return (84);
+    // }
+    // if (pthread_join(client->thread, NULL) != 0) {
+    //     perror("pthread_join() afficher :");
+    //     return (84);
+    // }
+    return 0;
 }

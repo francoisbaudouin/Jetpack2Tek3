@@ -14,8 +14,10 @@
 #include <string.h>
 #include <stdint.h>
 #include <sys/socket.h>
+#include <arpa/inet.h>
 #include <pthread.h>
 #include "stdbool.h"
+#include <unistd.h>
 
 typedef struct client_s
 {
