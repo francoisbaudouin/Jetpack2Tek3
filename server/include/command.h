@@ -9,11 +9,6 @@
 #define COMMAND_H_
 #include "server.h"
 
-typedef struct commands {
-	char *key;
-	void (*ptr)();
-} command_t;
-
 void id(server_t *server, player_t *player);
 void map(server_t *server, player_t *player);
 void ready(server_t *server, player_t *player);
@@ -22,5 +17,12 @@ void start(server_t *server, player_t *player);
 void player(server_t *server, player_t *player);
 void coin(server_t *server, player_t *player);
 void finish(server_t *server, player_t *player);
+
+typedef struct commands {
+	char *key;
+	void (*ptr)(server_t*, player_t*);
+} command_t;
+
+
 
 #endif /* !COMMAND_H_ */

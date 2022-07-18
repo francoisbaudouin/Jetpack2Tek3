@@ -35,12 +35,6 @@ typedef struct player_s {
     bool active_jetpack;
 } player_t;
 
-typedef struct client_s {
-    player_t p1;
-    player_t p2;
-    int nb_player;
-} client_t;
-
 typedef struct map_s {
     char **map;
     size_t width;

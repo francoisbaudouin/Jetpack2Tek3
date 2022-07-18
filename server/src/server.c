@@ -8,9 +8,8 @@
 #include "server.h"
 #include <signal.h>
 
-static void manage_client(server_t *server, client_t *client)
+static void manage_client(server_t *server, list_t *client)
 {
-    element_t *tmp;
     if (FD_ISSET(server->socket_fd_server, &server->tmp_rfds)) {
         new_client_connection(server, client);
     } else {

@@ -10,7 +10,9 @@
 
 void id(server_t *server, player_t *play)
 {
-    dprintf(play->socket_fd, "ID POR FAVOR\n");
+    printf("ID\n");
+    dprintf(play->socket_fd, "lala\n");
+    dprintf(play->socket_fd, "%i", play->id);
 }
 
 void map(server_t *server, player_t *play)
@@ -50,19 +52,19 @@ static void pars_data(char *str)
 static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
-    printf("exec command\n");
     command_t commands[] = {
-        {"ID", id},
-        {"MAP", map},
-        {"READY", ready},
-        {"FIRE", fire},
-        {"START", start},
-        {"PLAYER", player},
-        {"COIN", coin},
-        {"FINISH", finish},
-        {NULL, NULL},
+        {"ID\n", id},
+        {"MAP\n", map},
+        {"READY\n", ready},
+        {"FIRE\n", fire},
+        {"START\n", start},
+        {"PLAYER\n", player},
+        {"COIN\n", coin},
+        {"FINISH\n", finish},
+        {0, NULL},
     };
     for (int i = 0; commands[i].key != 0; i++) {
+        printf("%d\n", strcmp(commands_player, commands[i].key));
         if (strcmp(commands_player, commands[i].key) == 0)
             commands[i].ptr(server, p);
     }
@@ -74,16 +76,14 @@ void read_data_player_command(server_t *server, list_t *client)
     //thread
     element_t *tmp = client->first;
     char buffer[255];
-    printf("nb client: %d\n", client->size);
     if (tmp == NULL)
         return;
-    while (tmp->next != NULL ) {
-        printf("ici\n");
+    while (tmp != NULL ) {
+        memset(buffer, '\0', sizeof(buffer));
         if (read(tmp->player->socket_fd, &buffer, sizeof(buffer)) == -1) {
             printf("Server, read error\n");
             return;
         }
-        printf("%s\n", buffer);
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
     }
