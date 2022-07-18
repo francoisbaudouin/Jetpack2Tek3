@@ -15,6 +15,7 @@ list_t *initialization(void)
         return (NULL);
     }
     list->first = NULL;
+    list->size = 0;
 
     return (list);
 }

@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static void *init_player(player_t *player, int id)
+static void init_player(player_t *player, int id)
 {
     player->id = id;
     player->pos_x = 0;
@@ -16,7 +16,6 @@ static void *init_player(player_t *player, int id)
     player->connected = true;
     player->ready = false;
     player->active_jetpack = false;
-    return (player);
 }
 
 static player_t *add_player(server_t *server, int id)
@@ -29,16 +28,23 @@ static player_t *add_player(server_t *server, int id)
         printf("Server, accept error\n");
         return (NULL);
     }
-    player = init_player(player, id);
+    init_player(player, id);
     FD_SET(player->socket_fd, &server->rfds);
     return (player);
 }
 
 bool new_client_connection(server_t *server, list_t *client)
 {
-    if (client->size < 2) {
+    element_t *tmp;
+    if (client->size != 2) {
         insertion(client, add_player(server, client->size + 1));
+        tmp = client->first;
+        while (tmp->next != NULL) {
+            printf("ID: %i, FD %d\n", tmp->player->id, tmp->player->socket_fd);
+            tmp = tmp->next;
+        }
         return (true);
     }
+    printf("Not enough place!\n");
     return (false);
 }

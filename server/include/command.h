@@ -14,13 +14,13 @@ typedef struct commands {
 	void (*ptr)();
 } command_t;
 
-void id(server_t *server);
-void map(server_t *server);
-void ready(server_t *server);
-void fire(server_t *server);
-void start(server_t *server);
-void player(server_t *server);
-void coin(server_t *server);
-void finish(server_t *server);
+void id(server_t *server, player_t *player);
+void map(server_t *server, player_t *player);
+void ready(server_t *server, player_t *player);
+void fire(server_t *server, player_t *player);
+void start(server_t *server, player_t *player);
+void player(server_t *server, player_t *player);
+void coin(server_t *server, player_t *player);
+void finish(server_t *server, player_t *player);
 
 #endif /* !COMMAND_H_ */

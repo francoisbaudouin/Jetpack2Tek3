@@ -33,7 +33,6 @@ int main(int ac, char **av)
         return (84);
     }
 
-    printf("My port %d", server->port);
     server = load_map(server, av);
     if (server == NULL)
         return (84);
