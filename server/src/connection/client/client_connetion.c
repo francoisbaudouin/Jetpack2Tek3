@@ -19,30 +19,26 @@ static void *init_player(player_t *player, int id)
     return (player);
 }
 
-static bool add_player(server_t *server, element_t *elem, int id)
+static player_t *add_player(server_t *server, int id)
 {
-    elem->player = malloc(sizeof(player_t));
-    elem->player->socket_fd = accept(server->socket_fd_server, &server->socket_addr, server->socket_size);
-    if (elem->player->socket_fd == -1) {
-        printf("Server, player 2, accept fail");
-        return (false);
+    player_t *player = malloc(sizeof(player_t));
+
+    player->socket_fd = accept(server->socket_fd_server, 
+        (struct sockaddr*)&server->socket_addr, &server->socket_size);
+    if (player->socket_fd == -1) {
+        printf("Server, accept error\n");
+        return (NULL);
     }
-    elem->player = init_player(elem->player,id);
-    return (true);
+    player = init_player(player, id);
+    FD_SET(player->socket_fd, &server->rfds);
+    return (player);
 }
 
 bool new_client_connection(server_t *server, list_t *client)
 {
-    element_t *data = client->first;
-    if (client->size == 0) {
-        if (add_player(server, client->first, client->size + 1) == false)
-            return (false);
+    if (client->size < 2) {
+        insertion(client, add_player(server, client->size + 1));
         return (true);
-    } else if () {
-        
     }
-    player_t *player = malloc(sizeof(player_t));
-    insertion(client, player);
-
-    return (true);
+    return (false);
 }

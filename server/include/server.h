@@ -88,4 +88,14 @@ list_t *insertion(list_t *list, player_t *player);
 list_t *insertion_end(list_t *list, player_t *player);
 list_t *delete_first_elem(list_t *list);
 list_t *delete_last_elem(list_t *list);
+
+/*read data player*/
+void read_data_player_command(server_t *server, list_t *client);
+
+/*Server*/
+void running_server(server_t *server);
+
+/*connection client*/
+bool new_client_connection(server_t *server, list_t *client);
+
 #endif /* !SERVER_H_ */

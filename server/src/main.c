@@ -15,11 +15,6 @@ static void message_not_enough_arguments(void)
     printf("\t./serverJ2T3 [-p <port> |-g <gravity> | -m <map>]\n");
 }
 
-static void *init_struct_server(server_t server)
-{
-
-}
-
 int main(int ac, char **av) 
 {
     client_t *client;
@@ -45,6 +40,8 @@ int main(int ac, char **av)
     server = network_configuration(server);
     if ( server == false)
         return (84);
+
+    running_server(server);
     free(server);
     return (0);
 }
