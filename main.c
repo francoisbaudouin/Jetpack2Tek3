@@ -91,6 +91,7 @@ int game(char *av)
     game_object_t *game_object = malloc(sizeof(game_object_t));
     background_t **background = malloc(sizeof(background_t *) * 4);
     obstacle_t **obstacle = malloc(sizeof(obstacle_t *) * 100);
+    float second = 0;
 
     buffer = read_file(av, buffer);
     if (init_window(windows) == -1)
@@ -98,9 +99,6 @@ int game(char *av)
     init_game(game_object, background, obstacle, buffer);
     game_object->clock = sfClock_create();
     game_object->Actual.alive = true;
-
-    float second = 0;
-
     while (sfRenderWindow_isOpen(windows->window))
     {
         sfRenderWindow_clear(windows->window, sfBlack);
@@ -120,28 +118,21 @@ int game(char *av)
             obstacle[i]->pos.x -= 1;
             sfSprite_setPosition(obstacle[i]->sprite, obstacle[i]->pos);
         }
-        if (seconds > 0.2) {
+        if (seconds > 0.2)
             seconds = animated_sprite(game_object, game_object->clock);
-        }
         if (collisions(game_object->Actual, obstacle, windows) == -1) {
             game_object->Actual.rect.top = 324;
             game_object->Actual.alive = false;
         }
         sfRenderWindow_drawSprite(windows->window, background[0]->sprite, NULL);
         for (size_t i = 0; background[i]; i++)
-        {
             sfRenderWindow_drawSprite(windows->window, background[i]->sprite, NULL);
-        }
         draw_obstacle(windows, obstacle);
-        
         sfRenderWindow_drawSprite(windows->window, game_object->Actual.sprite, NULL);
-        /* Clear the screen */
         sfRenderWindow_display(windows->window);
     }
     sfRenderWindow_destroy(windows->window);
-
     return 0;
-
 }
 
 int main(int ac, char **av)
