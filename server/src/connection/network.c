@@ -25,6 +25,10 @@ static bool checkup_configuration(server_t *server)
 
 server_t *network_configuration(server_t *server)
 {
+    FD_ZERO(&server->rfds);
+    FD_ZERO(&server->wfds);
+    FD_ZERO(&server->tmp_rfds);
+    FD_ZERO(&server->tmp_wfds);
     server->socket_fd_server = socket(AF_INET, SOCK_STREAM,
         getprotobyname("tcp")->p_proto);
     server->socket_addr.sin_family = AF_INET;

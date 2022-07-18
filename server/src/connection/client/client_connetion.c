@@ -21,28 +21,20 @@ static void init_player(player_t *player, int id)
 static player_t *add_player(server_t *server, int id)
 {
     player_t *player = malloc(sizeof(player_t));
-
     player->socket_fd = accept(server->socket_fd_server, 
         (struct sockaddr*)&server->socket_addr, &server->socket_size);
     if (player->socket_fd == -1) {
         printf("Server, accept error\n");
         return (NULL);
     }
-    init_player(player, id);
     FD_SET(player->socket_fd, &server->rfds);
     return (player);
 }
 
 bool new_client_connection(server_t *server, list_t *client)
 {
-    element_t *tmp;
     if (client->size != 2) {
         insertion(client, add_player(server, client->size + 1));
-        tmp = client->first;
-        while (tmp->next != NULL) {
-            printf("ID: %i, FD %d\n", tmp->player->id, tmp->player->socket_fd);
-            tmp = tmp->next;
-        }
         return (true);
     }
     printf("Not enough place!\n");

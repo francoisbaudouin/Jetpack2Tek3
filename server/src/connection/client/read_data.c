@@ -74,7 +74,11 @@ void read_data_player_command(server_t *server, list_t *client)
     //thread
     element_t *tmp = client->first;
     char buffer[255];
+    printf("nb client: %d\n", client->size);
+    if (tmp == NULL)
+        return;
     while (tmp->next != NULL ) {
+        printf("ici\n");
         if (read(tmp->player->socket_fd, &buffer, sizeof(buffer)) == -1) {
             printf("Server, read error\n");
             return;
