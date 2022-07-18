@@ -32,13 +32,8 @@ typedef struct player_s {
     size_t pos_x;
     size_t pos_y;
     size_t money;
+    bool active_jetpack;
 } player_t;
-
-typedef struct client_s {
-    player_t p1;
-    player_t p2;
-    int nb_player;
-} client_t;
 
 typedef struct map_s {
     char **map;
@@ -58,16 +53,43 @@ typedef struct server_s {
     map_t *map;
     int gravity;
     int port;
+    bool server_running;
 } server_t;
+
+typedef struct element_s {
+    player_t *player;
+    struct element_s *next;
+} element_t;
+
+typedef struct list_s {
+    element_t *first;
+    int size;
+} list_t;
 
 /*Check error*/
 server_t *check_error_arguments(server_t *server, char **av);
 
-bool network_configuration(server_t *server);
+server_t *network_configuration(server_t *server);
 
 /* MAP MANAGEMENT*/
 
 server_t *load_map(server_t *server, char **argv);
 bool is_good_character(char *line);
+
+/*init list chain*/
+list_t *initialization(void);
+list_t *insertion(list_t *list, player_t *player);
+list_t *insertion_end(list_t *list, player_t *player);
+list_t *delete_first_elem(list_t *list);
+list_t *delete_last_elem(list_t *list);
+
+/*read data player*/
+void read_data_player_command(server_t *server, list_t *client);
+
+/*Server*/
+void running_server(server_t *server);
+
+/*connection client*/
+bool new_client_connection(server_t *server, list_t *client);
 
 #endif /* !SERVER_H_ */

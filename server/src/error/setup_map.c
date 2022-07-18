@@ -32,11 +32,11 @@ static void get_nb_line(char const *file, server_t *server)
 
 static bool store_map(server_t *server, char *line, size_t len ,size_t i)
 {
+    (void) len;
     if (is_good_character(line) == false) {
         return (false);
     }
     server->map->map[i] = strdup(line);
-    puts(server->map->map[i]);
     if (server->map->map[i] == NULL)
         return (false);
     return (true);

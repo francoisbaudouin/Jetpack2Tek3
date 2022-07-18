@@ -7,58 +7,36 @@
 
 #include "server.h"
 
-static void init_player_one(client_t *client)
+static void init_player(player_t *player, int id)
 {
-    client->p1.connected = true;
-    client->p1.money = 0;
-    client->p1.pos_x = 0;
-    client->p1.pos_y = 0;
-    client->p1.ready = true;
+    player->id = id;
+    player->pos_x = 0;
+    player->pos_y = 0;
+    player->money = 0;
+    player->connected = true;
+    player->ready = false;
+    player->active_jetpack = false;
 }
 
-static void init_player_two(client_t *client)
+static player_t *add_player(server_t *server, int id)
 {
-    client->p1.connected = true;
-    client->p1.money = 0;
-    client->p1.pos_x = 0;
-    client->p1.pos_y = 0;
-    client->p1.ready = true;
-}
-
-static bool new_client_player_one(server_t *server, client_t *client)
-{
-    client->p1.socket_fd = accept(server->socket_fd_server, &server->socket_addr, server->socket_size);
-    if (client->p1.socket_fd == -1) {
-        printf("Server, player 1, accept fail");
-        return (false);
+    player_t *player = malloc(sizeof(player_t));
+    player->socket_fd = accept(server->socket_fd_server, 
+        (struct sockaddr*)&server->socket_addr, &server->socket_size);
+    if (player->socket_fd == -1) {
+        printf("Server, accept error\n");
+        return (NULL);
     }
-    init_player_one(client);
-    return (true);
+    FD_SET(player->socket_fd, &server->rfds);
+    return (player);
 }
 
-static bool new_client_player_two(server_t *server, client_t *client)
+bool new_client_connection(server_t *server, list_t *client)
 {
-    client->p2.socket_fd = accept(server->socket_fd_server, &server->socket_addr, server->socket_size);
-    if (client->p2.socket_fd == -1) {
-        printf("Server, player 2, accept fail");
-        return (false);
-    }
-    init_player_two(client);
-    return (true);
-}
-
-
-bool new_client_connection(server_t *server, client_t *client)
-{
-    switch (client->nb_player) {
-    case (0):
-        if (new_client_player_two(server, client) == false)
-        break;
-    case (1):
-        if (new_client_player_two(server, client) == false);
-    default:
+    if (client->size != 2) {
+        insertion(client, add_player(server, client->size + 1));
         return (true);
-        break;
     }
-    return (true);
+    printf("Not enough place!\n");
+    return (false);
 }
