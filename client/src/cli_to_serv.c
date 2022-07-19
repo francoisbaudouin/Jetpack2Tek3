@@ -34,10 +34,10 @@ int cli_to_serv(client_t *client)
     FD_ZERO(&rfds_tmp);
     FD_ZERO(&wfds_tmp);
     FD_ZERO(&wfds);
+    FD_SET(client->fd, &wfds);
+    FD_SET(client->fd, &client->rfds);
 
     while (1) {
-        FD_SET(client->fd, &wfds);
-        FD_SET(client->fd, &client->rfds);
         rfds_tmp = client->rfds;
         wfds_tmp = wfds;
         if (select(FD_SETSIZE, &rfds_tmp, &wfds_tmp, NULL, NULL) == -1) {

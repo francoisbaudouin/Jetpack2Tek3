@@ -24,14 +24,11 @@ int main(int ac, char **av)
         message_not_enough_arguments();
         return (84);
     }
-
     server = check_error_arguments(server, av);
     if (server == false) {
         printf("error arguments\n");
         return (84);
     }
-
-    printf("av : %s", av[6]);
     server = load_map(server, av[6]);
     if (server == NULL)
         return (84);
