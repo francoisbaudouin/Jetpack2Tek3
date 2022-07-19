@@ -48,6 +48,7 @@ typedef struct client_s {
     bool ready;
     bool fire;
     bool start;
+    fd_set wfds;
 } client_t;
 
 char **split_string(char **str, char *buffer, char *delimiter);
