@@ -18,20 +18,17 @@ static void message_not_enough_arguments(void)
 int main(int ac, char **av) 
 {
     server_t *server = malloc(sizeof(server_t));
-    
+
     if (ac != 7) {
         printf("not enough arguments\n");
         message_not_enough_arguments();
         return (84);
     }
-
     server = check_error_arguments(server, av);
     if (server == false) {
         printf("error arguments\n");
         return (84);
     }
-
-    printf("av : %s", av[6]);
     server = load_map(server, av[6]);
     if (server == NULL)
         return (84);

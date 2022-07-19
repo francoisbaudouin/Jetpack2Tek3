@@ -13,7 +13,7 @@ static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
     command_t commands[] = {
-        {"ID", id},
+        {"ID\n", authentication},
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
@@ -28,7 +28,6 @@ static void exec_player_command(server_t *server, player_t *p,
 void read_data_player_command(server_t *server, list_t *client)
 {
     //thread
-    //dprintf(client->first->player->socket_fd, "\n");
     element_t *tmp = client->first;
     char buffer[255];
     if (tmp == NULL)
@@ -39,10 +38,7 @@ void read_data_player_command(server_t *server, list_t *client)
             printf("Server, read error\n");
             return;
         }
-        int i = 0;
-        for (; buffer[i] != '\0' && buffer[i] != '\r'; i++);
-        buffer[i-1] = '\0';
-        printf("buffer: %s: Len : %li\n ", buffer, strlen(buffer));
+        printf("buffe: %s : line : %ld\n", buffer, strlen(buffer));
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
     }

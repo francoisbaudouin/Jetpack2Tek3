@@ -6,10 +6,11 @@
 */
 
 #ifndef COMMAND_H_
-#define COMMAND_H_
-#include "server.h"
+	#define COMMAND_H_
 
-void id(server_t *server, player_t *player);
+	#include "server.h"
+
+void authentication(server_t *server, player_t *player);
 void map(server_t *server, player_t *player);
 void ready(server_t *server, player_t *player);
 void fire(server_t *server, player_t *player);
@@ -22,7 +23,5 @@ typedef struct commands {
 	char *key;
 	void (*ptr)(server_t*, player_t*);
 } command_t;
-
-
 
 #endif /* !COMMAND_H_ */

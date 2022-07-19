@@ -14,7 +14,8 @@ static bool checkup_configuration(server_t *server)
         close(server->socket_fd_server);
         return (false);
     }
-    if (bind(server->socket_fd_server, (struct sockaddr *) &server->socket_addr, 
+    if (bind(server->socket_fd_server, 
+        (struct sockaddr *) &server->socket_addr,
         sizeof(server->socket_addr)) != 0) {
         printf("Error bind");
         close(server->socket_fd_server);
