@@ -53,7 +53,6 @@ static bool map_cmp_width(size_t len, size_t save_len, bool first_line)
 
 char **read_file(char *av, char **buffer)
 {
-    printf("%s\n", av);
     FILE * fp = fopen(av, "r");
     int y = 0;
     char * line = NULL;
