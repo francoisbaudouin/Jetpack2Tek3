@@ -16,7 +16,7 @@ NAME	=	clientJ2T3
 
 LDFLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
 
-CFLAGS	=	-I./include -Wshadow -Wextra -Wall
+CFLAGS	=	-I./include -Wshadow -Wextra -Wall -g
 
 CC	=	gcc
 

@@ -21,15 +21,13 @@ int server_connexion(client_t *client, char *ip, char *port)
 
 int init_cli(client_t *client)
 {
-    uint32_t ip = htonl(atoi(client->ip));
+    // uint32_t ip = htonl(atoi(client->ip));
     int port = atoi(client->port);
 
     client->fd = socket(AF_INET, SOCK_STREAM, 0);
     if (!client->fd)
         return (-1);
     bzero(&client->servaddr, sizeof(client->servaddr));
-    if (ip <= 0 || port <= 0)
-        return (-1);
     client->servaddr.sin_family = AF_INET;
     client->servaddr.sin_addr.s_addr = inet_addr(client->ip);
     client->servaddr.sin_port = htons(port);

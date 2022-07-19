@@ -31,9 +31,6 @@ int check_args(int ac, char **av, client_t *client)
 void id(client_t *client, char **str)
 {
     dprintf(client->fd, "ID\n");
-    // if (size_array(str) != 2)
-    //     return;
-    // printf("je suis dans le id : %s\n", str[1]);
 }
 
 int size_array(char **str)
@@ -53,10 +50,6 @@ void map(client_t *client, char **str)
     printf("%d\n", client->actual.width);
     printf("%d\n", client->actual.height);
     client->actual.map = split_string(client->actual.map, str[3], "\n"); 
-    for (int i = 0; client->actual.map[i]; i++) {
-        printf("%s\n", client->actual.map[i]);
-    }
-    // SEND TO THE CLIENT
 }
 
 void ready(client_t *client, char **str)
@@ -77,24 +70,17 @@ void fire(client_t *client, char **str)
 
 static void exec_player_command(client_t *client, char **str)
 {
-// printf("exec command\n");
     function_ptr_t commands[] = {
         {"ID", id},
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
-        // {"START", start},
-        // {"PLAYER", player},
-        // {"COIN", coin},
-        // {"FINISH", finish},
         {NULL, NULL},
     };
-
     for (int i = 0; commands[i].key != 0; i++) {
         if (strcmp(str[0], commands[i].key) == 0)
             commands[i].ptr(client, str);
     }
-
 }
 
 void get_answer(client_t *client)
@@ -107,20 +93,23 @@ void get_answer(client_t *client)
         return;
     if (getline(&buff, &size, stream) == -1)
         return;
-    printf("%s\n", buff);
 }
 
 void send_id(client_t *client)
 {
-    send(client->fd, "ID", 3, 0);
-    dprintf(client->fd, "ID");
+    printf("a\n");
+    send(client->fd, "ID\n", 3, 0);
+    dprintf(client->fd, "ID\n");
 }
 
-void reply_from_serv(client_t *client)
+void reply_from_serv(client_t *client, fd_set copy_rd)
 {
-    if (FD_ISSET(client->fd, &client->rfds)) {
-        printf("a\n");
-        send_id(client);
+    for (int fds = 0; fds < FD_SETSIZE; fds++) {
+        if (FD_ISSET(fds, &copy_rd)) {
+            printf("a\n");
+            dprintf(fds, "ID\n");
+            send_id(client);
+        }
     }
     // if (FD_ISSET(client->fd, &client->rfds))
     //     get_answer(client);
@@ -128,42 +117,30 @@ void reply_from_serv(client_t *client)
 
 int cli_to_serv(client_t *client)
 {
+    fd_set copy_rd;
+    FD_SET(client->fd, &client->rfds);
     while (1) {
-        FD_SET(client->fd, &client->rfds);
-        if (select(FD_SETSIZE, &client->rfds, NULL, NULL, NULL) == -1) {
+        copy_rd = client->rfds;
+        if (select(FD_SETSIZE, &copy_rd, NULL, NULL, NULL) == -1) {
             return (-1);
         } else {
-            reply_from_serv(client);
-        }      
+            reply_from_serv(client, copy_rd);
+        }
     }
     return (0);
 }
 
 int main(int ac, char **av) 
 {
-    client_t *client = malloc(sizeof(client));
-    char *buffer = strdup("MAP 8 4 ____e____c___e__c\n____e____c___e__c\n____e____c___e__c\n");
-    // char *buffer = strdup("ID puto");
+    client_t *client = malloc(sizeof(client_t));
     client->ready = false;
     client->fire = false;
     client->start = false;
+    client->fd = 0;
     if (check_args(ac, av, client) == -1)
         return (84);
     if (init_cli(client) == -1)
         return (84);
-    // char **str;
-    // int i = 0;
-    // str = split_string(str, buffer, " ");
-    // exec_player_command(client, str);
-
     cli_to_serv(client);
-    // if (pthread_create(&client->thread, NULL, &cli_to_serv, client) != 0) {
-    //     perror("pthread_create() afficher :");
-    //     return (84);
-    // }
-    // if (pthread_join(client->thread, NULL) != 0) {
-    //     perror("pthread_join() afficher :");
-    //     return (84);
-    // }
     return 0;
 }
