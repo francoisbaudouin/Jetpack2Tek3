@@ -107,41 +107,44 @@ void get_answer(client_t *client)
         return;
     if (getline(&buff, &size, stream) == -1)
         return;
-    printf("%s\n", buff);
 }
 
 void send_id(client_t *client)
 {
-    send(client->fd, "ID", 3, 0);
-    dprintf(client->fd, "ID");
+    //send(client->fd, "ID", 3, 0);
+    dprintf(client->fd, "ID\n");
 }
 
-void reply_from_serv(client_t *client)
+void reply_from_serv(client_t *client, fd_set wfds)
 {
-    if (FD_ISSET(client->fd, &client->rfds)) {
+    if (FD_ISSET(client->fd, &wfds)) {
         printf("a\n");
         send_id(client);
     }
-    // if (FD_ISSET(client->fd, &client->rfds))
-    //     get_answer(client);
+    if (FD_ISSET(client->fd, &client->rfds))
+        get_answer(client);
 }
 
 int cli_to_serv(client_t *client)
 {
+    fd_set wfds;
+    FD_ZERO(&wfds);
     while (1) {
+        FD_SET(client->fd, &wfds);
         FD_SET(client->fd, &client->rfds);
-        if (select(FD_SETSIZE, &client->rfds, NULL, NULL, NULL) == -1) {
+        if (select(FD_SETSIZE, &client->rfds, &wfds, NULL, NULL) == -1) {
+            perror("select()");
             return (-1);
         } else {
-            reply_from_serv(client);
-        }      
+            reply_from_serv(client, wfds);
+        }   
     }
     return (0);
 }
 
 int main(int ac, char **av) 
 {
-    client_t *client = malloc(sizeof(client));
+    client_t *client = malloc(sizeof(client_t));
     char *buffer = strdup("MAP 8 4 ____e____c___e__c\n____e____c___e__c\n____e____c___e__c\n");
     // char *buffer = strdup("ID puto");
     client->ready = false;

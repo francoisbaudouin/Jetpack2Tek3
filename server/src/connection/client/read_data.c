@@ -7,12 +7,10 @@
 
 #include "command.h"
 #include <string.h>
+#include <ctype.h>
 
 void id(server_t *server, player_t *play)
 {
-    // printf("ID\n");
-    // dprintf(play->socket_fd, "lala\n");
-    printf("a\n");
     dprintf(play->socket_fd, "%i", play->id);
 }
 
@@ -24,14 +22,17 @@ void ready(server_t *server, player_t *play)
 {
     printf("test id");
 }
+
 void fire(server_t *server, player_t *play)
 {
-    printf("test id");
+    play->active_jetpack = true;
 }
+
 void start(server_t *server, player_t *play)
 {
     printf("test id");
 }
+
 void coin(server_t *server, player_t *play)
 {
     printf("test id");
@@ -54,7 +55,7 @@ static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
     command_t commands[] = {
-        {"ID", id},
+        {"ID\n", id},
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
@@ -83,7 +84,7 @@ void read_data_player_command(server_t *server, list_t *client)
             printf("Server, read error\n");
             return;
         }
-        printf("%s\n", buffer);
+        printf("buffer: %s: Len : %i\n ", buffer, strlen(buffer));
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
     }
