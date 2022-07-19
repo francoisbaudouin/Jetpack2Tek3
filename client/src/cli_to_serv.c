@@ -20,11 +20,9 @@ void get_answer(client_t *client)
         return;
     str = split_string(str, buff, " ");
     exec_player_command(client, str);
-
-    printf("buffer from server: %s\n", buff);
 }
 
-void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds, int *nb)
+void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
 {
     if (FD_ISSET(client->fd, &wfds) && client->id == NULL) {
         dprintf(client->fd, "ID\n");
@@ -43,7 +41,6 @@ int cli_to_serv(client_t *client)
     FD_ZERO(&wfds);
     FD_SET(client->fd, &wfds);
     FD_SET(client->fd, &client->rfds);
-    int nb = 0;
 
     while (1) {
         rfds_tmp = client->rfds;
@@ -52,7 +49,7 @@ int cli_to_serv(client_t *client)
             perror("select()");
             return (-1);
         } else {
-            reply_from_serv(client, wfds_tmp, rfds_tmp, &nb);
+            reply_from_serv(client, wfds_tmp, rfds_tmp);
         }
     }
     return (0);

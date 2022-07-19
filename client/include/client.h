@@ -60,7 +60,7 @@ void ready(client_t *client, char **str);
 void map(client_t *client, char **str);
 void id(client_t *client, char **str);
 int cli_to_serv(client_t *client);
-void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds, int *nb);
+void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds);
 void get_answer(client_t *client);
 int init_cli(client_t *client);
 int size_array(char **str);
