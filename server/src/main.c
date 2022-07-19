@@ -31,7 +31,8 @@ int main(int ac, char **av)
         return (84);
     }
 
-    server = load_map(server, av);
+    printf("av : %s", av[6]);
+    server = load_map(server, av[6]);
     if (server == NULL)
         return (84);
     server = network_configuration(server);
