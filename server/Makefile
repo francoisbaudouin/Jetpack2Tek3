@@ -14,6 +14,7 @@ MAIN	=	src/main.c \
 			src/error/verify_map.c \
 			src/list_chain_init.c \
 			src/server.c\
+			src/command/command.c
 
 SRC	=
 

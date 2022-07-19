@@ -9,48 +9,6 @@
 #include <string.h>
 #include <ctype.h>
 
-void id(server_t *server, player_t *play)
-{
-    dprintf(play->socket_fd, "ID %d", play->id);
-}
-
-void map(server_t *server, player_t *play)
-{
-    printf("test id\n");
-}
-void ready(server_t *server, player_t *play)
-{
-    printf("test id");
-}
-
-void fire(server_t *server, player_t *play)
-{
-    play->active_jetpack = true;
-}
-
-void start(server_t *server, player_t *play)
-{
-    printf("test id");
-}
-
-void coin(server_t *server, player_t *play)
-{
-    printf("test id");
-}
-void finish(server_t *server, player_t *play)
-{
-    printf("test id");
-}
-void player(server_t *server, player_t *play)
-{
-    printf("test id");
-}
-
-static void pars_data(char *str)
-{
-
-}
-
 static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
@@ -59,10 +17,6 @@ static void exec_player_command(server_t *server, player_t *p,
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
-        {"START", start},
-        {"PLAYER", player},
-        {"COIN", coin},
-        {"FINISH", finish},
         {0, NULL},
     };
     for (int i = 0; commands[i].key != 0; i++) {

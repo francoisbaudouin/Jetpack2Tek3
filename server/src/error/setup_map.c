@@ -85,10 +85,7 @@ static bool load_file(server_t *server, char const *filepath)
 
 server_t *load_map(server_t *server, char *path)
 {
-    printf("avant\n");
     server->map = malloc(sizeof(map_t));
-    if (load_file(server, path) == false) {
-        return (NULL);
-    }
+    load_file(server, path);
     return (server);
 }
