@@ -67,7 +67,7 @@ typedef struct list_s {
 } list_t;
 
 /*Check error*/
-server_t *check_error_arguments(server_t *server, char **av, int ac);
+server_t *check_error_arguments(server_t *server, char **av);
 
 server_t *network_configuration(server_t *server);
 
