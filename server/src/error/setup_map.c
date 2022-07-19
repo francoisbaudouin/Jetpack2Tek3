@@ -51,7 +51,7 @@ static bool map_cmp_width(size_t len, size_t save_len, bool first_line)
     return (false);
 }
 
-char **read_file(char *av, char **buffer)
+char **read_file(char *av, char **buffer, server_t *server)
 {
     FILE * fp = fopen(av, "r");
     int y = 0;
@@ -62,10 +62,12 @@ char **read_file(char *av, char **buffer)
     if (fp == NULL)
         exit(EXIT_FAILURE);
     while ((read = getline(&line, &len, fp)) != -1) {
+        server->map->width = strlen(line);
         buffer[y] = malloc(sizeof(char) * strlen(line));
         buffer[y] = strdup(line);
         y++;
     }
+    server->map->high = y;
     buffer[y] = NULL;
     fclose(fp);
     if (line)
@@ -77,5 +79,5 @@ void load_map(server_t *server, char *path)
 {
     server->map = malloc(sizeof(map_t));
     server->map->map = malloc(sizeof(char *)*50);
-    read_file(path, server->map->map);
+    read_file(path, server->map->map, server);
 }

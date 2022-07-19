@@ -9,15 +9,15 @@
 
 void get_answer(client_t *client)
 {
-    char *buff = calloc(sizeof(char), 1000);
+    //char *buff = calloc(sizeof(char), 1000);
+    char buff[255];
     size_t size;
     char **str = NULL;
     FILE *stream = fdopen(client->fd, "r");
 
     if (!stream)
         return;
-    if (getline(&buff, &size, stream) == -1)
-        return;
+    read(client->fd, &buff, sizeof(buff));
     str = split_string(str, buff, " ");
     exec_player_command(client, str);
 }
@@ -26,6 +26,9 @@ void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
 {
     if (FD_ISSET(client->fd, &wfds) && client->id == NULL) {
         dprintf(client->fd, "ID\n");
+    }
+    if (FD_ISSET(client->fd, &wfds) && client->actual.map == NULL && client->id != NULL) {
+        dprintf(client->fd, "MAP\n");
     }
     if (FD_ISSET(client->fd, &rfds))
         get_answer(client);

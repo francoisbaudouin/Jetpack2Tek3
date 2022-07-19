@@ -14,7 +14,11 @@ void authentication(server_t *server, player_t *play)
 
 void map(server_t *server, player_t *play)
 {
-    printf("test id\n");
+    char *str = calloc(server->map->width * server->map->high, sizeof(char));
+    for (size_t i = 0; server->map->map[i] ; i++) {
+        strcat(str, server->map->map[i]);
+    }
+    dprintf(play->socket_fd, "MAP %ld %ld %s \n", server->map->width, server->map->high, str);
 }
 
 void ready(server_t *server, player_t *play)
