@@ -8,21 +8,21 @@
 #ifndef SERVER_H_
     #define SERVER_H_
 
-#define MAX_CONNECTION 2
+    #include <stdio.h>
+    #include <sys/select.h>
+    #include <sys/time.h>
+    #include <sys/types.h>
+    #include <unistd.h>
+    #include <stdlib.h>
+    #include <string.h>
+    #include <sys/socket.h>
+    #include <netdb.h>
+    #include <netinet/in.h>
+    #include <netinet/ip.h>
+    #include <arpa/inet.h>
+    #include <stdbool.h>
 
-#include <stdio.h>
-#include <sys/select.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <netdb.h>
-#include <netinet/in.h>
-#include <netinet/ip.h>
-#include <arpa/inet.h>
-#include <stdbool.h>
+#define MAX_CONNECTION 2
 
 typedef struct player_s {
     int socket_fd;

@@ -7,7 +7,8 @@
 
 #ifndef COMMAND_H_
 	#define COMMAND_H_
-#include "server.h"
+
+	#include "server.h"
 
 void authentication(server_t *server, player_t *player);
 void map(server_t *server, player_t *player);
