@@ -18,7 +18,7 @@ static void message_not_enough_arguments(void)
 int main(int ac, char **av) 
 {
     server_t *server = malloc(sizeof(server_t));
-    
+
     if (ac != 7) {
         printf("not enough arguments\n");
         message_not_enough_arguments();
