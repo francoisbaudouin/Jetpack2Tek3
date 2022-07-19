@@ -6,26 +6,25 @@
 */
 
 #ifndef CLIENT_H_
-#define CLIENT_H_
+    #define CLIENT_H_
 
-#include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdint.h>
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <pthread.h>
-#include "stdbool.h"
-#include <unistd.h>
+    #include <netinet/in.h>
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+    #include <stdint.h>
+    #include <sys/socket.h>
+    #include <arpa/inet.h>
+    #include <pthread.h>
+    #include "stdbool.h"
+    #include <unistd.h>
 
 typedef struct function_ptrs {
     char *key;
     void (*ptr)();
 } function_ptr_t;
 
-typedef struct player_s
-{
+typedef struct player_s {
     char **map;
     int id;
     int width;
@@ -37,8 +36,7 @@ typedef struct player_s
     int score;
 } player_t;
 
-typedef struct client_s
-{
+typedef struct client_s {
     char *port;
     char *ip;
     int fd;
