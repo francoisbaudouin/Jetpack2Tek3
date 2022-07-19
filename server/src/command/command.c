@@ -23,10 +23,16 @@ void map(server_t *server, player_t *play)
 
 void ready(server_t *server, player_t *play)
 {
-    printf("test id");
+    printf("le player est ready\n");
+    play->ready = true;
 }
 
 void fire(server_t *server, player_t *play)
 {
-    play->active_jetpack = true;
+    // int actived = atoi(stats);
+    // if (actived < 0)
+    //     return;
+    // if (actived > 1)
+    //     play->active_jetpack = true;
+    // play->active_jetpack = false;
 }

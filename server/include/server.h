@@ -55,6 +55,7 @@ typedef struct server_s {
     char *port;
     bool server_running;
     char *path_map;
+    bool can_strat_game;
 } server_t;
 
 typedef struct element_s {

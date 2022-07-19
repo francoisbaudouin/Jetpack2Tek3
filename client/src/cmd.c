@@ -19,14 +19,9 @@ void map(client_t *client, char **str)
 
     // if (count != 4)
     //     printf("not enough arguments\n");
-    // client->actual.width = atoi(str[1]);
-    // client->actual.height = atoi(str[2]);
-    // client->actual.map = split_string(client->actual.map, str[3], "\n");
-    for (size_t i = 0; str[i]; i++)
-    {
-        printf("%s", str[i]);
-    }
-    
+    client->actual.width = atoi(str[1]);
+    client->actual.height = atoi(str[2]);
+    client->actual.map = split_string(client->actual.map, str[3], "\n");
 }
 
 void ready(client_t *client, char **str)

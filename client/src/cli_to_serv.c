@@ -10,7 +10,7 @@
 void get_answer(client_t *client)
 {
     //char *buff = calloc(sizeof(char), 1000);
-    char buff[255];
+    char buff[1024];
     size_t size;
     char **str = NULL;
     FILE *stream = fdopen(client->fd, "r");
@@ -29,6 +29,10 @@ void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
     }
     if (FD_ISSET(client->fd, &wfds) && client->actual.map == NULL && client->id != NULL) {
         dprintf(client->fd, "MAP\n");
+    }
+    if (FD_ISSET(client->fd, &wfds) && client->actual.map != NULL && client->id != NULL && client->ready == false) {
+        client->ready = true;
+        dprintf(client->fd, "READY\n");
     }
     if (FD_ISSET(client->fd, &rfds))
         get_answer(client);
