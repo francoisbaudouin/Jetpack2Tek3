@@ -7,9 +7,10 @@
 
 #include "../include/client.h"
 
-void id(client_t *client)
+void id(client_t *client, char **str)
 {
-    dprintf(client->fd, "ID\n");
+    client->id = strdup(str[1]);
+    printf("client id: %s\n", client->id);
 }
 
 void map(client_t *client, char **str)
@@ -41,7 +42,7 @@ void fire(client_t *client, char **str)
     client->fire = true;
 }
 
-static void exec_player_command(client_t *client, char **str)
+void exec_player_command(client_t *client, char **str)
 {
     function_ptr_t commands[] = {
         {"ID", id},

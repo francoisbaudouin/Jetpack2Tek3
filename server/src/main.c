@@ -19,14 +19,9 @@ int main(int ac, char **av)
     {
         printf("%s\n", server->map->map[i]);
     }
-    
-    /*
-    if (server == NULL)
+    if (network_configuration(server) == -1)
         return (84);
-    server = network_configuration(server);
-    if ( server == false)
-        return (84); */
-    //running_server(server);
+    running_server(server);
     free(server);
     return (0);
 }

@@ -11,22 +11,23 @@ void get_answer(client_t *client)
 {
     char *buff = calloc(sizeof(char), 1000);
     size_t size;
-    char test[255];
+    char **str = NULL;
     FILE *stream = fdopen(client->fd, "r");
 
     if (!stream)
         return;
     if (getline(&buff, &size, stream) == -1)
         return;
+    str = split_string(str, buff, " ");
+    exec_player_command(client, str);
 
     printf("buffer from server: %s\n", buff);
 }
 
 void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds, int *nb)
 {
-    if (FD_ISSET(client->fd, &wfds) && *nb == 0) {
+    if (FD_ISSET(client->fd, &wfds) && client->id == NULL) {
         dprintf(client->fd, "ID\n");
-        (*nb)++;
     }
     if (FD_ISSET(client->fd, &rfds))
         get_answer(client);
