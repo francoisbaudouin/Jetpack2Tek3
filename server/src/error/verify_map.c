@@ -6,6 +6,7 @@
 */
 
 #include "server.h"
+
 #define COIN 'c'
 #define ELECTRIC_FENCE 'e'
 #define EMPTY_SPACE '_'
