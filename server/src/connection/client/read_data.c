@@ -14,9 +14,9 @@ static void exec_player_command(server_t *server, player_t *p,
 {
     command_t commands[] = {
         {"ID\n", authentication},
-        {"MAP", map},
-        {"READY", ready},
-        {"FIRE", fire},
+        {"MAP\n", map},
+        {"READY\n", ready},
+        {"FIRE\n", fire},
         {0, NULL},
     };
     for (int i = 0; commands[i].key != 0; i++) {
@@ -39,6 +39,7 @@ void read_data_player_command(server_t *server, list_t *client)
             return;
         }
         printf("buffe: %s : line : %ld\n", buffer, strlen(buffer));
+        // FD_ISSET
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
     }

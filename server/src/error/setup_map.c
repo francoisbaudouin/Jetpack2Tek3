@@ -51,40 +51,32 @@ static bool map_cmp_width(size_t len, size_t save_len, bool first_line)
     return (false);
 }
 
-static bool load_file(server_t *server, char const *filepath)
+char **read_file(char *av, char **buffer)
 {
-    FILE *fp = fopen(filepath, "r");
+    printf("%s\n", av);
+    FILE * fp = fopen(av, "r");
+    int y = 0;
+    char * line = NULL;
     size_t len = 0;
-    char *line;
-    size_t save_width = 0;
-    bool first_line = true;
-    int end = 0;
+    ssize_t read;
 
-    if (fp == NULL) {
-        return (false);
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+    while ((read = getline(&line, &len, fp)) != -1) {
+        buffer[y] = malloc(sizeof(char) * strlen(line));
+        buffer[y] = strdup(line);
+        y++;
     }
-    get_nb_line(filepath, server);
-    server->map->map = malloc(sizeof(char *) * (server->map->high + 1));
-    while (true) {
-        end = getline(&line, &len, fp);
-        if (end == -1)
-            break;
-        if (map_cmp_width(len, save_width, first_line) == false) 
-            return (false);
-        first_line = false;
-        save_width = len;
-        if (store_map(server, line, len, save_width) == false)
-            return (false);
-    }
-    server->map->width = save_width;
+    buffer[y] = NULL;
     fclose(fp);
-    free(line);
-    return (true);
+    if (line)
+        free(line);
+    return (buffer);
 }
 
-server_t *load_map(server_t *server, char *path)
+void load_map(server_t *server, char *path)
 {
     server->map = malloc(sizeof(map_t));
-    load_file(server, path);
-    return (server);
+    server->map->map = malloc(sizeof(char *)*50);
+    read_file(path, server->map->map);
 }

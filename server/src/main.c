@@ -14,11 +14,13 @@ int main(int ac, char **av)
 
     if (check_error_arguments(server, av, ac) == -1)
         return (84);
-/*     if (server == false) {
-        printf("error arguments\n");
-        return (84);
+    load_map(server, server->path_map);
+    for (size_t i = 0; server->map->map[i]; i++)
+    {
+        printf("%s\n", server->map->map[i]);
     }
-    server = load_map(server, av[6]);
+    
+    /*
     if (server == NULL)
         return (84);
     server = network_configuration(server);
