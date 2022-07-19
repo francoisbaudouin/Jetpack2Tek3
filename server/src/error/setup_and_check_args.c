@@ -9,28 +9,41 @@
 #include <string.h>
 #include <stdlib.h>
 
-static bool check_port_argument(server_t *server, char **argv)
+static void message_not_enough_arguments(void)
 {
-    int port = 0; 
-    if (strcmp(argv[1], "-p") != 0 || (port = atoi(argv[2])) == 0)
-        return (false);
-    server->port = port;
-    return (true);
+    printf("USAGE:\n");
+    printf("\t./serverJ2T3 [-p <port> |-g <gravity> | -m <map>]\n");
 }
 
-static bool check_gravity_argument(server_t *server, char **argv)
+static void arguments_value(server_t *server, char **av)
 {
-    int gravity = 0; 
-    if (strcmp(argv[3], "-g") != 0 || (gravity = atoi(argv[4])) == 0)
-        return (false);
-    server->gravity = gravity;
-    return (true);
+   for (size_t i = 0; av[i]; i++)
+    {
+        if (strcmp(av[i], "-p") == 0 && av[i + 1] != NULL) {
+            server->port = strdup(av[i + 1]);
+            i++;
+        }
+        if (strcmp(av[i], "-g") == 0 && av[i + 1] != NULL) {
+            server->gravity = strdup(av[i + 1]);
+            i++;
+        }
+        if (strcmp(av[i], "-m") == 0 && av[i + 1] != NULL) {
+            server->path_map = strdup(av[i + 1]);
+            i++;
+        }
+    }
 }
 
-server_t *check_error_arguments(server_t *server, char **av)
+int check_error_arguments(server_t *server, char **av, int ac)
 {
-    if (check_port_argument(server, av) == false
-        || check_gravity_argument(server, av) == false)
-        return (NULL);
-    return (server);
+    if (ac != 7) {
+        printf("not enough arguments\n");
+        message_not_enough_arguments();
+        return (-1);
+    }
+    arguments_value(server, av);
+    if (server->gravity == NULL || server->port == NULL ||
+        server->path_map == NULL)
+        return (-1); 
+    return (0);
 }
