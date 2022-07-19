@@ -36,5 +36,6 @@ int init_cli(client_t *client)
     if (server_connexion(client, client->ip, client->port) == -1)
         return (-1);
     FD_ZERO(&client->rfds);
+    FD_ZERO(&client->wfds);
     return (0);
 }
