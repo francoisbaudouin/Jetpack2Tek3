@@ -17,7 +17,7 @@ void map(client_t *client, char **str)
     int count = size_array(str);
 
     if (count != 4)
-        printf("pas asser d'arguments\n");
+        printf("not enough arguments\n");
     client->actual.width = atoi(str[1]);
     client->actual.height = atoi(str[2]);
     client->actual.map = split_string(client->actual.map, str[3], "\n"); 
@@ -28,7 +28,7 @@ void ready(client_t *client, char **str)
     int count = size_array(str);
 
     if (count != 1)
-        printf("pas asser d'arguments\n");
+        printf("not enough arguments\n");
     client->ready = true;
 }
 
@@ -37,7 +37,7 @@ void fire(client_t *client, char **str)
     int count = size_array(str);
 
     if (count != 2)
-        printf("pas asser d'arguments\n");
+        printf("not enough arguments\n");
     client->fire = true;
 }
 
