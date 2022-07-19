@@ -25,6 +25,8 @@ static bool is_all_player_ready(server_t *server, list_t *client)
     
     if(tmp->player->ready == tmp->next->player->ready) {
         server->can_strat_game = true;
+        dprintf(tmp->player->socket_fd, "READY\n");
+        dprintf(tmp->next->player->socket_fd, "READY\n");
         return (true);
     }
     return (false);
