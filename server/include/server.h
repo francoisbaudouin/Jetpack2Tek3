@@ -39,7 +39,7 @@ typedef struct map_s {
     char **map;
     size_t width;
     size_t high;
-    int cells;
+    char *cells;
 } map_t;
 
 typedef struct server_s {

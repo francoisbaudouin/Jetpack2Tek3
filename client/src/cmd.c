@@ -15,13 +15,18 @@ void id(client_t *client, char **str)
 
 void map(client_t *client, char **str)
 {
-    int count = size_array(str);
+    // int count = size_array(str);
 
-    if (count != 4)
-        printf("not enough arguments\n");
-    client->actual.width = atoi(str[1]);
-    client->actual.height = atoi(str[2]);
-    client->actual.map = split_string(client->actual.map, str[3], "\n");
+    // if (count != 4)
+    //     printf("not enough arguments\n");
+    // client->actual.width = atoi(str[1]);
+    // client->actual.height = atoi(str[2]);
+    // client->actual.map = split_string(client->actual.map, str[3], "\n");
+    for (size_t i = 0; str[i]; i++)
+    {
+        printf("%s", str[i]);
+    }
+    
 }
 
 void ready(client_t *client, char **str)
