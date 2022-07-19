@@ -61,8 +61,9 @@ static bool load_file(server_t *server, char const *filepath)
     bool first_line = true;
     int end = 0;
 
-    if (fp == NULL)
+    if (fp == NULL) {
         return (false);
+    }
     get_nb_line(filepath, server);
     server->map->map = malloc(sizeof(char *) * (server->map->high + 1));
     while (true) {
@@ -82,11 +83,12 @@ static bool load_file(server_t *server, char const *filepath)
     return (true);
 }
 
-server_t *load_map(server_t *server, char **argv)
+server_t *load_map(server_t *server, char *path)
 {
-    if (strcmp(argv[5], "-m") != 0)
-        return (NULL);
+    printf("avant\n");
     server->map = malloc(sizeof(map_t));
-    load_file(server, argv[6]);
+    if (load_file(server, path) == false) {
+        return (NULL);
+    }
     return (server);
 }

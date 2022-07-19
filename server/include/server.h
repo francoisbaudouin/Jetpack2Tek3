@@ -67,13 +67,13 @@ typedef struct list_s {
 } list_t;
 
 /*Check error*/
-server_t *check_error_arguments(server_t *server, char **av);
+server_t *check_error_arguments(server_t *server, char **av, int ac);
 
 server_t *network_configuration(server_t *server);
 
 /* MAP MANAGEMENT*/
 
-server_t *load_map(server_t *server, char **argv);
+server_t *load_map(server_t *server, char *path);
 bool is_good_character(char *line);
 
 /*init list chain*/

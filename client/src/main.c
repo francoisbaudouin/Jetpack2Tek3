@@ -105,8 +105,7 @@ void get_answer(client_t *client)
     if (!stream)
         return;
     if (getline(&buff, &size, stream) == -1)
-        return;
-    printf("get buffer\n");
+        return;   
     printf("buffer from server: %s\n", buff);
 }
 
