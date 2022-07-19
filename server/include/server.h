@@ -6,7 +6,7 @@
 */
 
 #ifndef SERVER_H_
-#define SERVER_H_
+    #define SERVER_H_
 
 #define MAX_CONNECTION 2
 

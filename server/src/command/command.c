@@ -7,7 +7,7 @@
 
 #include "command.h"
 
-void id(server_t *server, player_t *play)
+void authentication(server_t *server, player_t *play)
 {
     dprintf(play->socket_fd, "ID %d", play->id);
 }
