@@ -73,7 +73,7 @@ server_t *network_configuration(server_t *server);
 
 /* MAP MANAGEMENT*/
 
-server_t *load_map(server_t *server, char **argv);
+server_t *load_map(server_t *server, char *path);
 bool is_good_character(char *line);
 
 /*init list chain*/

@@ -7,7 +7,8 @@
 
 MAIN	=	src/main.c
 
-SRC	=
+SRC		=	src/split_str.c	\
+			src/connection.c
 
 OBJ	=	$(MAIN:.c=.o) $(SRC:.c=.o)
 

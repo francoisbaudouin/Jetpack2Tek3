@@ -10,11 +10,10 @@
 
 static void manage_client(server_t *server, list_t *client)
 {
-    if (FD_ISSET(server->socket_fd_server, &server->tmp_rfds)) {
+    if (FD_ISSET(server->socket_fd_server, &server->tmp_rfds))
         new_client_connection(server, client);
-    } else {
+    else
         read_data_player_command(server, client);
-    }
 }
 
 void running_server(server_t *server)

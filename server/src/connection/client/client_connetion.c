@@ -27,6 +27,7 @@ static player_t *add_player(server_t *server, int id)
         printf("Server, accept error\n");
         return (NULL);
     }
+    init_player(player, id);
     FD_SET(player->socket_fd, &server->rfds);
     return (player);
 }
