@@ -51,9 +51,10 @@ typedef struct server_s {
     int socket_fd_server;
     struct sockaddr_in socket_addr;
     map_t *map;
-    int gravity;
-    int port;
+    char *gravity;
+    char *port;
     bool server_running;
+    char *path_map;
 } server_t;
 
 typedef struct element_s {
@@ -67,9 +68,9 @@ typedef struct list_s {
 } list_t;
 
 /*Check error*/
-server_t *check_error_arguments(server_t *server, char **av);
+int check_error_arguments(server_t *server, char **av, int ac);
 
-server_t *network_configuration(server_t *server);
+int network_configuration(server_t *server);
 
 /* MAP MANAGEMENT*/
 
