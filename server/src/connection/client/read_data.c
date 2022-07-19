@@ -11,6 +11,7 @@
 
 void id(server_t *server, player_t *play)
 {
+    printf("send id\n");
     dprintf(play->socket_fd, "%i", play->id);
 }
 
@@ -84,7 +85,7 @@ void read_data_player_command(server_t *server, list_t *client)
             printf("Server, read error\n");
             return;
         }
-        printf("buffer: %s: Len : %i\n ", buffer, strlen(buffer));
+        printf("buffer: %s: Len : %li\n ", buffer, strlen(buffer));
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
     }

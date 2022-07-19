@@ -102,11 +102,12 @@ void get_answer(client_t *client)
     char *buff = calloc(sizeof(char), 1000);
     size_t size;
     FILE *stream = fdopen(client->fd, "r");
-
     if (!stream)
         return;
     if (getline(&buff, &size, stream) == -1)
         return;
+    printf("get buffer\n");
+    printf("buffer from server: %s\n", buff);
 }
 
 void send_id(client_t *client)
@@ -128,11 +129,17 @@ void reply_from_serv(client_t *client, fd_set wfds)
 int cli_to_serv(client_t *client)
 {
     fd_set wfds;
+    fd_set wfds_tmp;
+    fd_set rfds_tmp;
+    FD_ZERO(&rfds_tmp);
+    FD_ZERO(&wfds_tmp);
     FD_ZERO(&wfds);
     while (1) {
         FD_SET(client->fd, &wfds);
         FD_SET(client->fd, &client->rfds);
-        if (select(FD_SETSIZE, &client->rfds, &wfds, NULL, NULL) == -1) {
+        rfds_tmp = client->rfds;
+        wfds_tmp = wfds;
+        if (select(FD_SETSIZE, &rfds_tmp, &wfds_tmp, NULL, NULL) == -1) {
             perror("select()");
             return (-1);
         } else {
