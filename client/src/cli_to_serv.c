@@ -11,18 +11,24 @@ void get_answer(client_t *client)
 {
     char *buff = calloc(sizeof(char), 1000);
     size_t size;
+    char test[255];
     FILE *stream = fdopen(client->fd, "r");
 
     if (!stream)
         return;
     if (getline(&buff, &size, stream) == -1)
         return;
+
     printf("buffer from server: %s\n", buff);
 }
 
-void reply_from_serv(client_t *client, fd_set wfds)
+void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds, int *nb)
 {
-    if (FD_ISSET(client->fd, &client->rfds))
+    if (FD_ISSET(client->fd, &wfds) && *nb == 0) {
+        dprintf(client->fd, "ID\n");
+        (*nb)++;
+    }
+    if (FD_ISSET(client->fd, &rfds))
         get_answer(client);
 }
 
@@ -36,6 +42,7 @@ int cli_to_serv(client_t *client)
     FD_ZERO(&wfds);
     FD_SET(client->fd, &wfds);
     FD_SET(client->fd, &client->rfds);
+    int nb = 0;
 
     while (1) {
         rfds_tmp = client->rfds;
@@ -44,7 +51,7 @@ int cli_to_serv(client_t *client)
             perror("select()");
             return (-1);
         } else {
-            reply_from_serv(client, wfds);
+            reply_from_serv(client, wfds_tmp, rfds_tmp, &nb);
         }
     }
     return (0);

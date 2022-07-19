@@ -9,7 +9,7 @@
 
 void authentication(server_t *server, player_t *play)
 {
-    dprintf(play->socket_fd, "ID %d", play->id);
+    dprintf(play->socket_fd, "ID %d\n", play->id);
 }
 
 void map(server_t *server, player_t *play)
