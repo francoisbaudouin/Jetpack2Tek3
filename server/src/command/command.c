@@ -15,6 +15,7 @@ void authentication(server_t *server, player_t *play)
 void map(server_t *server, player_t *play)
 {
     char *str = calloc(server->map->width * server->map->high, sizeof(char));
+
     for (size_t i = 0; server->map->map[i] ; i++) {
         strcat(str, server->map->map[i]);
     }
@@ -23,7 +24,6 @@ void map(server_t *server, player_t *play)
 
 void ready(server_t *server, player_t *play)
 {
-    printf("le player est ready\n");
     play->ready = true;
 }
 
