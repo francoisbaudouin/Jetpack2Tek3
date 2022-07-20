@@ -64,26 +64,26 @@ int main(int ac, char **av)
     client->id = NULL;
     client->fd = 0;
     client->port = NULL;
+    pthread_t t;
+
     client->ready = false;
     client->fire = false;
     client->start = false;
-
+    client->id = NULL;
+    client->actual.map = NULL;
     if (check_args(ac, av, client) == -1)
         return (84);
     if (init_cli(client) == -1)
         return (84);
-
-
-    if (pthread_create(&client->thread, NULL, &cli_to_serv,
+    if (pthread_create(&t, NULL, cli_to_serv,
         (void *)client) != 0) {
             perror("pthread_create() afficher :");
         return (84);
     }
     game(client);
-    if (pthread_join(client->thread, NULL) != 0) {
+    if (pthread_join(t, NULL) != 0) {
         perror("pthread_join() afficher :");
         return (84);
     }
-    pthread_exit(&client->thread);
     return (0);
 }

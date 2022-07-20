@@ -11,15 +11,14 @@ void get_answer(client_t *client)
 {
     //char *buff = calloc(sizeof(char), 1000);
     char buff[1024];
-    size_t size;
     char **str = NULL;
-    FILE *stream = fdopen(client->fd, "r");
 
-    if (!stream)
+    if (!read(client->fd, &buff, sizeof(buff)))
         return;
-    read(client->fd, &buff, sizeof(buff));
-    str = split_string(str, buff, " ");
-    exec_player_command(client, str);
+    if (buff != NULL) {
+        str = split_string(str, buff, " ");
+        exec_player_command(client, str);
+    }
 }
 
 void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
@@ -64,5 +63,5 @@ void *cli_to_serv(void * av)
             reply_from_serv(client, wfds_tmp, rfds_tmp);
         }
     }
-    return (0);
+    pthread_exit(NULL);
 }
