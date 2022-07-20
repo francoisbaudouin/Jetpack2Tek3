@@ -34,3 +34,19 @@ char **split_string(char **str, char *buffer, char *delimiter)
     str[i] = NULL;
     return (str);
 }
+
+char **split_string_map(char **str, char *buffer, client_t *client)
+{
+    int j = 0;
+    int k = 0;
+
+    for (int i = 0; i < client->actual.width * client->actual.height; i++) {
+        if (k == client->actual.width) {
+            j++;
+            k = 0;
+        }
+        str[j][k] = buffer[i];
+        k++;
+    }
+    return (str);
+}
