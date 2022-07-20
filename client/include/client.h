@@ -52,7 +52,7 @@ typedef struct window_s
     sfVideoMode mode;
     sfRenderWindow* window;
     sfEvent event;
-}window_t;
+} window_t;
 
 typedef struct client_s {
     char *port;
