@@ -46,7 +46,6 @@ static bool loop_game(server_t *server, list_t *client)
 void running_server(server_t *server)
 {
     list_t *client = initialization();
-    //signal(SIGINT, (__sighandler_t)(server->server_running = false));
     server->server_running = true;
     while (server->server_running == true) {
         server->tmp_rfds = server->rfds;
