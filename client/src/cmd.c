@@ -66,6 +66,7 @@ void exec_player_command(client_t *client, char **str)
         {"MAP", map},
         {"READY", ready},
         {"FIRE", fire},
+        {"PLAYER", player},
         {NULL, NULL},
     };
 
