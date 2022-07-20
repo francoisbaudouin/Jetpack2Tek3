@@ -27,20 +27,42 @@ static void exec_player_command(server_t *server, player_t *p,
     }
 }
 
+static void player_send_data(server_t *server, list_t *client)
+{
+    element_t *p1;
+    printf("a\n");
+    //element_t *p2;
+    // if (client->size != 2)
+    //     return;
+    p1 = client->first;
+    //p2 = client->first->next;
+    dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
+        p1->player->pos_x, p1->player->pos_y, p1->player->score);
+    // dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
+    //     p2->player->pos_x, p2->player->pos_x, p2->player->score);
+    // dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
+    //     p2->player->pos_x, p2->player->pos_x, p2->player->score);
+    // dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
+    //     p1->player->pos_x, p1->player->pos_x, p1->player->score);
+}
+
 void read_data_player_command(server_t *server, list_t *client)
 {
     element_t *tmp = client->first;
     char buffer[255];
     if (tmp == NULL)
         return;
-    while (tmp != NULL ) {
+    while (tmp != NULL) {
         bzero(buffer, sizeof(buffer));
         if (read(tmp->player->socket_fd, &buffer, sizeof(buffer)) == -1) {
             printf("Server, read error\n");
             return;
         }
-        if(FD_ISSET(tmp->player->socket_fd, &server->tmp_rfds))
+        printf("buffer: %s", buffer);
+        if (FD_ISSET(tmp->player->socket_fd, &server->tmp_rfds))
             exec_player_command(server, tmp->player, buffer);
+        if (FD_ISSET(tmp->player->socket_fd, &server->tmp_wfds))
+            player_send_data(server, client);
         tmp = tmp->next;
     }
 }

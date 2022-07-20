@@ -23,6 +23,7 @@ void player(client_t *client, char **str)
 
 void id(client_t *client, char **str)
 {
+    printf("%s\n", str[1]);
     client->id = strdup(str[1]);
 }
 

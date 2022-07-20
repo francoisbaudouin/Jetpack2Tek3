@@ -32,28 +32,6 @@ static bool is_all_player_ready(server_t *server, list_t *client)
     return (false);
 }
 
-static void player_send_data(list_t *client)
-{
-    element_t *p1;
-    //element_t *p2;
-    printf("send playaer data\n");
-    // if (client->size != 2)
-    //     return;
-    p1 = client->first;
-    //p2 = client->first->next;
-    if (p1->player->ready) {
-        printf("send data\n");
-        dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
-            p1->player->pos_x, p1->player->pos_x, p1->player->score);
-    }
-    // dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
-    //     p2->player->pos_x, p2->player->pos_x, p2->player->score);
-    // dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
-    //     p2->player->pos_x, p2->player->pos_x, p2->player->score);
-    // dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
-    //     p1->player->pos_x, p1->player->pos_x, p1->player->score);
-}
-
 static bool loop_game(server_t *server, list_t *client)
 {
     (void) server;
@@ -78,13 +56,6 @@ void running_server(server_t *server)
             perror("select");
             return;
         }
-        if (client->size == 1) {
-            move(server, client);
-        }
         manage_client(server, client);
-        if (client->size == 2)
-            loop_game(server, client);
-        if (client->size == 1)
-            player_send_data(client);
     }
 }

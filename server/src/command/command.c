@@ -11,6 +11,7 @@ void authentication(server_t *server, player_t *play, char **str_command)
 {
     (void) str_command;
     (void) server;
+
     dprintf(play->socket_fd, "ID %d\n", play->id);
 }
 

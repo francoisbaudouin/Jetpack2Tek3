@@ -10,8 +10,8 @@
 static void init_player(player_t *player, int id)
 {
     player->id = id;
-    player->pos_x = 0;
-    player->pos_y = 0;
+    player->pos_x = 1;
+    player->pos_y = 1;
     player->money = 0;
     player->connected = true;
     player->ready = false;
