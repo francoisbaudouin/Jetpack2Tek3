@@ -24,7 +24,7 @@ static bool checkup_configuration(server_t *server)
     return (true);
 }
 
-static bool init_fd(server_t *server)
+static void init_fd(server_t *server)
 {
     FD_ZERO(&server->rfds);
     FD_ZERO(&server->wfds);

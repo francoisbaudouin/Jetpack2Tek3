@@ -29,7 +29,6 @@ static void exec_player_command(server_t *server, player_t *p,
 
 void read_data_player_command(server_t *server, list_t *client)
 {
-    //thread
     element_t *tmp = client->first;
     char buffer[255];
     if (tmp == NULL)

@@ -41,9 +41,11 @@ static void player_send_data(list_t *client)
     //     return;
     p1 = client->first;
     //p2 = client->first->next;
-    if (p1->player->ready)
-        dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
+    if (p1->player->ready) {
+        printf("send data\n");
+        dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
             p1->player->pos_x, p1->player->pos_x, p1->player->score);
+    }
     // dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
     //     p2->player->pos_x, p2->player->pos_x, p2->player->score);
     // dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
@@ -75,6 +77,9 @@ void running_server(server_t *server)
             &server->tmp_wfds, NULL, NULL) == -1) {
             perror("select");
             return;
+        }
+        if (client->size == 1) {
+            move(server, client);
         }
         manage_client(server, client);
         if (client->size == 2)

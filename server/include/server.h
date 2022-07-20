@@ -30,8 +30,8 @@ typedef struct player_s {
     bool connected;
     bool ready;
     size_t score;
-    size_t pos_x;
-    size_t pos_y;
+    int pos_x;
+    int pos_y;
     size_t money;
     bool jetpack;
 } player_t;
@@ -97,5 +97,8 @@ bool new_client_connection(server_t *server, list_t *client);
 
 /*command split string*/
 char **split_string(char **str, char *buffer, char *delimiter);
+
+/*move player*/
+void move(server_t *server, list_t *client);
 
 #endif /* !SERVER_H_ */

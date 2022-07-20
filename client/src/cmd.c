@@ -8,11 +8,12 @@
 #include "../include/client.h"
 
 void player(client_t *client, char **str)
-{    
+{
     if (atoi(client->id) == atoi(str[1])) {
         client->actual.x = atof(str[2]);
         client->actual.y = atof(str[3]);
         client->actual.score = atof(str[4]);
+        printf("x: %f\ny: %f\n", client->actual.x, client->actual.y);
     } else {
         client->enemy.x = atof(str[2]);
         client->enemy.y = atof(str[3]);

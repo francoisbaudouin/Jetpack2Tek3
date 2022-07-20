@@ -16,6 +16,7 @@ MAIN	=	src/main.c \
 			src/server.c \
 			src/command/command.c \
 			src/command/split_str.c \
+			src/player_mov.c\
 
 SRC	=
 
