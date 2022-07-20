@@ -55,3 +55,8 @@ dkms.conf
 .vscode
 
 .txt
+
+client/clientJ2T3
+clientJ2T3
+server/serverJ2T3
+serverJ2T3
