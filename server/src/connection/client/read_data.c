@@ -13,6 +13,7 @@ static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
     char **str_command = NULL;
+
     command_t commands[] = {
         {"ID\n", authentication},
         {"MAP\n", map},
@@ -30,6 +31,7 @@ static void exec_player_command(server_t *server, player_t *p,
 static void player_send_data(server_t *server, list_t *client)
 {
     element_t *p1;
+
     p1 = client->first;
     if (p1->player->ready)
         dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
@@ -40,6 +42,7 @@ void read_data_player_command(server_t *server, list_t *client)
 {
     element_t *tmp = client->first;
     char buffer[255];
+
     if (tmp == NULL)
         return;
     while (tmp != NULL) {

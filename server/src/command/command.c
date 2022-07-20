@@ -31,6 +31,7 @@ void ready(server_t *server, player_t *play, char **str_command)
 {
     (void) server;
     (void) str_command;
+
     play->ready = true;
 }
 
