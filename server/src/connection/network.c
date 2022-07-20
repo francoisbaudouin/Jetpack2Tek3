@@ -24,16 +24,21 @@ static bool checkup_configuration(server_t *server)
     return (true);
 }
 
+static bool init_fd(server_t *server)
+{
+    FD_ZERO(&server->rfds);
+    FD_ZERO(&server->wfds);
+    FD_ZERO(&server->tmp_rfds);
+    FD_ZERO(&server->tmp_wfds);
+}
+
 int network_configuration(server_t *server)
 {
     int port = atoi(server->port);
 
     if (port <= 0)
         return (-1);
-    FD_ZERO(&server->rfds);
-    FD_ZERO(&server->wfds);
-    FD_ZERO(&server->tmp_rfds);
-    FD_ZERO(&server->tmp_wfds);
+    init_fd(server);
     server->socket_fd_server = socket(AF_INET, SOCK_STREAM,
         getprotobyname("tcp")->p_proto);
     server->socket_addr.sin_family = AF_INET;
