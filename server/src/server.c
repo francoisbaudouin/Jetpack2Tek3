@@ -36,8 +36,7 @@ static bool loop_game(server_t *server, list_t *client)
 {
     (void) server;
     (void) client;
-    // is disconnect
-    // jetpack;
+
     if (is_all_player_ready(server, client) == true)
         return (false);
     return (true);
@@ -46,7 +45,6 @@ static bool loop_game(server_t *server, list_t *client)
 void running_server(server_t *server)
 {
     list_t *client = initialization();
-    //signal(SIGINT, (__sighandler_t)(server->server_running = false));
     server->server_running = true;
     while (server->server_running == true) {
         server->tmp_rfds = server->rfds;
@@ -57,5 +55,7 @@ void running_server(server_t *server)
             return;
         }
         manage_client(server, client);
+        if (client->size == 2)
+            loop_game(server, client);
     }
 }

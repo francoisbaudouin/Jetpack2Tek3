@@ -28,10 +28,12 @@ void init_background(background_t **background)
         background[i]->scale.y = 3.0;
         background[i]->pos.x = 1200 * i;
         background[i]->pos.y = 0;
-        background[i]->texture = sfTexture_createFromFile("BackdropMain.png", NULL);
+        background[i]->texture = 
+            sfTexture_createFromFile("BackdropMain.png", NULL);
         background[i]->sprite = sfSprite_create();
         sfSprite_setPosition(background[i]->sprite, background[i]->pos);
-        sfSprite_setTexture(background[i]->sprite, background[i]->texture, sfTrue);
+        sfSprite_setTexture(background[i]->sprite, background[i]->texture,
+            sfTrue);
         sfSprite_scale(background[i]->sprite, background[i]->scale);
     }
 }
@@ -41,7 +43,8 @@ int init_window(window_t *windows)
     windows->mode.bitsPerPixel = 32;
     windows->mode.width = 1920;
     windows->mode.height = 1080;
-    windows->window = sfRenderWindow_create(windows->mode, "SFML window", sfResize | sfClose, NULL);
+    windows->window = sfRenderWindow_create(windows->mode, "SFML window",
+        sfResize | sfClose, NULL);
     if (!windows->window)
         return (-1);
     return (0);
