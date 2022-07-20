@@ -29,6 +29,7 @@ typedef struct player_s {
     int id;
     bool connected;
     bool ready;
+    size_t score;
     size_t pos_x;
     size_t pos_y;
     size_t money;

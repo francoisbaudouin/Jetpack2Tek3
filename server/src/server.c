@@ -32,6 +32,28 @@ static bool is_all_player_ready(server_t *server, list_t *client)
     return (false);
 }
 
+static void player_send_data(list_t *client)
+{
+    element_t *p1;
+    element_t *p2;
+
+    if (client->size != 2)
+        return;
+    p1 = client->first;
+    p2 = client->first->next;
+    dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
+        p1->player->pos_x, p1->player->pos_x, p1->player->score);
+
+    dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
+        p2->player->pos_x, p2->player->pos_x, p2->player->score);
+    
+    dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p2->player->id, 
+        p2->player->pos_x, p2->player->pos_x, p2->player->score);
+    
+    dprintf(p2->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
+        p1->player->pos_x, p1->player->pos_x, p1->player->score);
+}
+
 static bool loop_game(server_t *server, list_t *client)
 {
     (void) server;
@@ -57,6 +79,7 @@ void running_server(server_t *server)
             perror("select");
             return;
         }
+        player_send_data(client);
         manage_client(server, client);
         if (client->size == 2)
             loop_game(server, client);

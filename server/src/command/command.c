@@ -10,6 +10,7 @@
 void authentication(server_t *server, player_t *play, char **str_command)
 {
     (void) str_command;
+    (void) server;
     dprintf(play->socket_fd, "ID %d\n", play->id);
 }
 
@@ -27,12 +28,14 @@ void map(server_t *server, player_t *play, char **str_command)
 
 void ready(server_t *server, player_t *play, char **str_command)
 {
+    (void) server;
     (void) str_command;
     play->ready = true;
 }
 
 void fire(server_t *server, player_t *play, char **str_command)
 {
+    (void) server;
     sleep(1);
     if (strcmp(str_command[1], "0") == 0) {
         play->jetpack = false;
