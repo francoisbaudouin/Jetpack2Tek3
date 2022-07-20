@@ -40,20 +40,15 @@ char **split_string_map(char **str, char *buffer, client_t *client)
     int j = 0;
     int k = 0;
 
-    str = malloc(sizeof(char *) * (client->actual.height + 1));
-
-    for (int i = 0; buffer[i]; i++) {
-        str[j] = malloc(sizeof(char) * client->actual.width + 1);
-        if (k == client->actual.width - 1) {
+    for (int i = 0; i < client->actual.width * client->actual.height; i++) {
+        if (k == client->actual.width) {
             j++;
             k = 0;
         }
         str[j][k] = buffer[i];
-        printf("%c\n", str[j][k]);
         k++;
     }
-    for (size_t i = 0; str[i]; i++)
-    {
+    for (size_t i = 0; str[i]; i++) {
         printf("%s\n", str[i]);
     }
     return (str);

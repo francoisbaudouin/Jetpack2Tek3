@@ -21,6 +21,9 @@ void map(client_t *client, char **str)
     //     printf("not enough arguments\n");
     client->actual.width = atoi(str[1]);
     client->actual.height = atoi(str[2]);
+    client->actual.map = malloc(sizeof(char *) * (client->actual.height));
+    for (size_t i = 0; i < client->actual.height; i++)
+        client->actual.map[i] = malloc(sizeof(char) * client->actual.width + 1);
     client->actual.map = split_string_map(client->actual.map, str[3], client);
 }
 
