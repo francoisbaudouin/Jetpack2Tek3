@@ -36,41 +36,41 @@ int size_array(char **str)
     return (i);
 }
 
-int main(int ac, char **av)
+void init_player(player_t player)
 {
-    client_t *client = malloc(sizeof(client_t));
-    client->actual_window = malloc(sizeof(window_t));
-    client->actual.x = 0;
-    client->actual.y = 0;
-    client->actual.cells = 0;
-    client->actual.fire = false;
-    client->actual.height = 0;
-    client->actual.width = 0;
-    client->actual.id = NULL;
-    client->actual.map = NULL;
-    client->actual.score = 0;
+    player.x = 0;
+    player.y = 0;
+    player.cells = 0;
+    player.fire = false;
+    player.height = 0;
+    player.width = 0;
+    player.id = NULL;
+    player.map = NULL;
+    player.score = 0;
+}
 
-    client->enemy.x = 0;
-    client->enemy.y = 0;
-    client->enemy.cells = 0;
-    client->enemy.fire = false;
-    client->enemy.height = 0;
-    client->enemy.width = 0;
-    client->enemy.id = NULL;
-    client->enemy.map = NULL;
-    client->enemy.score = 0;
-
+void init_struct(client_t *client)
+{
+    init_player(client->actual);
+    init_player(client->enemy);
     client->ip = NULL;
     client->id = NULL;
     client->fd = 0;
     client->port = NULL;
-    pthread_t t;
-
     client->ready = false;
     client->fire = false;
     client->start = false;
     client->id = NULL;
     client->actual.map = NULL;
+}
+
+int main(int ac, char **av)
+{
+    client_t *client = malloc(sizeof(client_t));
+    client->actual_window = malloc(sizeof(window_t));
+    init_struct(client);
+    pthread_t t;
+
     if (check_args(ac, av, client) == -1)
         return (84);
     if (init_cli(client) == -1)
