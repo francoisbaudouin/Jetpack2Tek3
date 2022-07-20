@@ -12,7 +12,7 @@
 static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
-    char **str_command;
+    char **str_command = NULL;
     command_t commands[] = {
         {"ID\n", authentication},
         {"MAP\n", map},

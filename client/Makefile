@@ -13,12 +13,12 @@ SRC		=	src/split_str.c		\
 			src/cmd.c \
 			src/csfml.c \
 			src/init_map.c \
-			
+
 OBJ	=	$(MAIN:.c=.o) $(SRC:.c=.o)
 
 NAME	=	clientJ2T3
 
-LDFLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window
+LDFLAGS	=	-lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window -lpthread
 
 CFLAGS	=	-I./include -Wshadow -Wextra -Wall
 

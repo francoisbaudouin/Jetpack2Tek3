@@ -43,8 +43,9 @@ void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
         get_answer(client);
 }
 
-int cli_to_serv(client_t *client)
+void *cli_to_serv(void * av)
 {
+    client_t *client = (client_t*)av;
     fd_set wfds_tmp;
     fd_set rfds_tmp;
     FD_ZERO(&rfds_tmp);
@@ -52,13 +53,13 @@ int cli_to_serv(client_t *client)
     FD_SET(client->fd, &client->wfds);
     FD_SET(client->fd, &client->rfds);
 
-    game(client);
+    //game(client);
     while (1) {
         rfds_tmp = client->rfds;
         wfds_tmp = client->wfds;
         if (select(FD_SETSIZE, &rfds_tmp, &wfds_tmp, NULL, NULL) == -1) {
             perror("select()");
-            return (-1);
+            return (NULL);
         } else {
             reply_from_serv(client, wfds_tmp, rfds_tmp);
         }
