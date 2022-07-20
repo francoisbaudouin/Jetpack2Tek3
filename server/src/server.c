@@ -36,6 +36,9 @@ static bool loop_game(server_t *server, list_t *client)
 {
     (void) server;
     (void) client;
+    // is disconnect
+    // jetpack;
+    // player;
     if (is_all_player_ready(server, client) == true)
         return (false);
     return (true);
