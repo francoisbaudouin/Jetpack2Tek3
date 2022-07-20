@@ -34,11 +34,11 @@ void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
         client->ready = true;
         dprintf(client->fd, "READY\n");
     }
-    if (FD_ISSET(client->fd, &wfds) && client->fire == true) {
-        dprintf(client->fd, "FIRE 1\n");
-    } else if (FD_ISSET(client->fd, &wfds) && client->fire == false) {
-        dprintf(client->fd, "FIRE 0\n");
-    }
+    // if (FD_ISSET(client->fd, &wfds) && client->fire == true) {
+    //     dprintf(client->fd, "FIRE 1\n");
+    // } else if (FD_ISSET(client->fd, &wfds) && client->fire == false) {
+    //     dprintf(client->fd, "FIRE 0\n");
+    // }
     if (FD_ISSET(client->fd, &rfds))
         get_answer(client);
 }

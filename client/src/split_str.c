@@ -35,20 +35,26 @@ char **split_string(char **str, char *buffer, char *delimiter)
     return (str);
 }
 
-char **split_string_map(char **str, char *buffer, char *delimiter)
+char **split_string_map(char **str, char *buffer, client_t *client)
 {
-    char **map;
-    int width;
-    int heigh;
-    if (size_array(str) != 4)
-        return (NULL);
-    width = atoi(str[1]);
-    heigh = atoi(str[2]);
-    map = malloc(sizeof(char *) * (width * heigh));
-    for (int i = 0; str[3]; i++) {
-        /* code */
-    }
-    
+    int j = 0;
+    int k = 0;
 
+    str = malloc(sizeof(char *) * (client->actual.height + 1));
+
+    for (int i = 0; buffer[i]; i++) {
+        str[j] = malloc(sizeof(char) * client->actual.width + 1);
+        if (k == client->actual.width - 1) {
+            j++;
+            k = 0;
+        }
+        str[j][k] = buffer[i];
+        printf("%c\n", str[j][k]);
+        k++;
+    }
+    for (size_t i = 0; str[i]; i++)
+    {
+        printf("%s\n", str[i]);
+    }
     return (str);
 }

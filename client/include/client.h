@@ -113,6 +113,7 @@ typedef struct obstacle {
 // }game_object_t;
 
 char **split_string(char **str, char *buffer, char *delimiter);
+char **split_string_map(char **str, char *buffer, client_t *client);
 int count_space(char *str, char delim);
 void exec_player_command(client_t *client, char **str);
 void fire(client_t *client, char **str);

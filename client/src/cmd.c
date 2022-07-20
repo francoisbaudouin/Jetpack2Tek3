@@ -21,7 +21,7 @@ void map(client_t *client, char **str)
     //     printf("not enough arguments\n");
     client->actual.width = atoi(str[1]);
     client->actual.height = atoi(str[2]);
-    client->actual.map = split_string(client->actual.map, str[3], "\n");
+    client->actual.map = split_string_map(client->actual.map, str[3], client);
 }
 
 void ready(client_t *client, char **str)
