@@ -9,7 +9,6 @@
 
 void get_answer(client_t *client)
 {
-    //char *buff = calloc(sizeof(char), 1000);
     char buff[1024];
     char **str = NULL;
 
@@ -21,7 +20,16 @@ void get_answer(client_t *client)
     }
 }
 
-void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
+void fire_cmd(client_t *client, fd_set wfds)
+{
+    if (FD_ISSET(client->fd, &wfds) && client->fire == true) {
+        dprintf(client->fd, "FIRE 1\n");
+    } else if (FD_ISSET(client->fd, &wfds) && client->fire == false) {
+        dprintf(client->fd, "FIRE 0\n");
+    }
+}
+
+void server_to_cli(client_t *client, fd_set wfds)
 {
     if (FD_ISSET(client->fd, &wfds) && client->id == NULL) {
         dprintf(client->fd, "ID\n");
@@ -33,11 +41,12 @@ void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
         client->ready = true;
         dprintf(client->fd, "READY\n");
     }
-    // if (FD_ISSET(client->fd, &wfds) && client->fire == true) {
-    //     dprintf(client->fd, "FIRE 1\n");
-    // } else if (FD_ISSET(client->fd, &wfds) && client->fire == false) {
-    //     dprintf(client->fd, "FIRE 0\n");
-    // }
+    fire_cmd(client, wfds);
+}
+
+void reply_from_serv(client_t *client, fd_set wfds, fd_set rfds)
+{
+    server_to_cli(client, wfds);
     if (FD_ISSET(client->fd, &rfds))
         get_answer(client);
 }
@@ -52,7 +61,6 @@ void *cli_to_serv(void * av)
     FD_SET(client->fd, &client->wfds);
     FD_SET(client->fd, &client->rfds);
 
-    //game(client);
     while (1) {
         rfds_tmp = client->rfds;
         wfds_tmp = client->wfds;

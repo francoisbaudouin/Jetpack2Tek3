@@ -55,6 +55,9 @@ typedef struct window_s
 }window_t;
 
 typedef struct client_s {
+    sfText *text;
+    sfFont *font;
+    sfVector2f pos_text;
     char *port;
     char *ip;
     char *id;
@@ -81,37 +84,12 @@ enum entity_e {
     COIN
 };
 
-// typedef struct player {
-//     sfSprite *sprite;
-//     sfTexture *texture;
-//     sfIntRect rect;
-//     sfVector2f pos;
-//     bool alive;
-// } player_t;
-
 typedef struct background {
     sfSprite *sprite;
     sfTexture *texture;
     sfVector2f pos;
     sfVector2f scale;
 } background_t;
-
-typedef struct obstacle {
-    enum entity_e entity;
-    sfSprite *sprite;
-    sfTexture *texture;
-    sfVector2f pos;
-    sfVector2f scale;
-    bool drawable;
-} obstacle_t;
-
-// typedef struct game_object_s{
-//     enum state_e state;
-//     struct player Actual;
-//     struct player Enemy;
-//     sfClock *clock;
-//     sfTime time;
-// }game_object_t;
 
 char **split_string(char **str, char *buffer, char *delimiter);
 char **split_string_map(char **str, char *buffer, client_t *client);
