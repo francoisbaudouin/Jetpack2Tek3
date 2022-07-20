@@ -9,11 +9,14 @@
 
 void player(client_t *client, char **str)
 {
-    if (strcmp(client->id, str[1]) == 0) {
+    printf("c\n");
+    if (atoi(client->id) == atoi(str[1])) {
+        printf("a\n");
         client->actual.x = atof(str[2]);
         client->actual.y = atof(str[3]);
         client->actual.score = atof(str[4]);
     } else {
+        printf("b\n");
         client->enemy.x = atof(str[2]);
         client->enemy.y = atof(str[3]);
         client->enemy.score = atof(str[4]);
