@@ -8,19 +8,12 @@
 #include "../include/client.h"
 
 void player(client_t *client, char **str)
-{
-    for (size_t i = 0; str[i]; i++)
-    {
-        printf("%s\n", str[i]);
-    }
-    
+{    
     if (atoi(client->id) == atoi(str[1])) {
-        printf("a\n");
         client->actual.x = atof(str[2]);
         client->actual.y = atof(str[3]);
         client->actual.score = atof(str[4]);
     } else {
-        printf("b\n");
         client->enemy.x = atof(str[2]);
         client->enemy.y = atof(str[3]);
         client->enemy.score = atof(str[4]);
@@ -29,17 +22,11 @@ void player(client_t *client, char **str)
 
 void id(client_t *client, char **str)
 {
-    printf("%s\n", str[1]);
     client->id = strdup(str[1]);
-    printf("client id: %s\n", client->id);
 }
 
 void map(client_t *client, char **str)
 {
-    // int count = size_array(str);
-
-    // if (count != 4)
-    //     printf("not enough arguments\n");
     client->actual.width = atoi(str[1]);
     client->actual.height = atoi(str[2]);
     client->actual.map = malloc(sizeof(char *) * (client->actual.height));
