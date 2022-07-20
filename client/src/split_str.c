@@ -34,3 +34,21 @@ char **split_string(char **str, char *buffer, char *delimiter)
     str[i] = NULL;
     return (str);
 }
+
+char **split_string_map(char **str, char *buffer, char *delimiter)
+{
+    char **map;
+    int width;
+    int heigh;
+    if (size_array(str) != 4)
+        return (NULL);
+    width = atoi(str[1]);
+    heigh = atoi(str[2]);
+    map = malloc(sizeof(char *) * (width * heigh));
+    for (int i = 0; str[3]; i++) {
+        /* code */
+    }
+    
+
+    return (str);
+}
