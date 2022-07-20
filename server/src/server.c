@@ -16,6 +16,31 @@ static void manage_client(server_t *server, list_t *client)
         read_data_player_command(server, client);
 }
 
+static bool is_all_player_ready(server_t *server, list_t *client)
+{
+    element_t *tmp = client->first;
+    
+    if(tmp == NULL && tmp->next == NULL)
+        return (false);
+    
+    if(tmp->player->ready == tmp->next->player->ready) {
+        server->can_strat_game = true;
+        dprintf(tmp->player->socket_fd, "READY\n");
+        dprintf(tmp->next->player->socket_fd, "READY\n");
+        return (true);
+    }
+    return (false);
+}
+
+static bool loop_game(server_t *server, list_t *client)
+{
+    (void) server;
+    (void) client;
+    if (is_all_player_ready(server, client) == true)
+        return (false);
+    return (true);
+}
+
 void running_server(server_t *server)
 {
     list_t *client = initialization();
@@ -30,5 +55,7 @@ void running_server(server_t *server)
             return;
         }
         manage_client(server, client);
+        if (client->size == 2)
+            loop_game(server, client);
     }
 }
