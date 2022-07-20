@@ -59,5 +59,6 @@ int main(int ac, char **av)
         perror("pthread_join() afficher :");
         return (84);
     }
+    pthread_exit(&client->thread);
     return (0);
 }
