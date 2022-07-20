@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static void move (server_t *server, client_t *client)
-{
+// static void move (server_t *server, client_t *client)
+// {
 
-}
+// }
