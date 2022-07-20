@@ -7,10 +7,24 @@
 
 #include "../include/client.h"
 
+void player(client_t *client, char **str)
+{
+    if (strcmp(client->id, str[1]) == 0) {
+        client->actual.x = atof(str[2]);
+        client->actual.y = atof(str[3]);
+        client->actual.score = atof(str[4]);
+    } else {
+        client->enemy.x = atof(str[2]);
+        client->enemy.y = atof(str[3]);
+        client->enemy.score = atof(str[4]);
+    }
+}
+
 void id(client_t *client, char **str)
 {
     client->id = strdup(str[1]);
     printf("client id: %s\n", client->id);
+    // printf("client id: %s\n", client->id);
 }
 
 void map(client_t *client, char **str)

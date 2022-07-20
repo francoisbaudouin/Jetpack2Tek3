@@ -40,7 +40,7 @@ void read_data_player_command(server_t *server, list_t *client)
             printf("Server, read error\n");
             return;
         }
-        printf("buffe: %s : line : %ld\n", buffer, strlen(buffer));
+        // printf("buffe: %s : line : %ld\n", buffer, strlen(buffer));
         // FD_ISSET
         exec_player_command(server, tmp->player, buffer);
         tmp = tmp->next;
