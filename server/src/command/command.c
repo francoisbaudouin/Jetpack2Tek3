@@ -19,9 +19,10 @@ void map(server_t *server, player_t *play, char **str_command)
     char *str = calloc(server->map->width * server->map->high, sizeof(char));
 
     for (size_t i = 0; server->map->map[i] ; i++) {
-        strcat(str, server->map->map[i]);
+        strncat(str, server->map->map[i], strlen(server->map->map[i])-1);
     }
-    dprintf(play->socket_fd, "MAP %ld %ld %s \n", server->map->width, server->map->high, str);
+    dprintf(play->socket_fd, "MAP %ld %ld %s \n", server->map->width,
+        server->map->high, str);
 }
 
 void ready(server_t *server, player_t *play, char **str_command)
