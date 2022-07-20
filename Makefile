@@ -1,34 +1,61 @@
 ##
 ## EPITECH PROJECT, 2020
-## aurele.nicolas@epitech.eu
+## my_defender
 ## File description:
-## Makefile
+## makefile
 ##
 
-all: client server
+SRC	=
 
-client:
-	make -C client/ all
-	cp client/clientJ2T3 ./
+MAIN	=	src/main.c	\
 
-server:
-	make -C server/ all
-	cp server/serverJ2T3 ./
+TEST_SRC	=
+
+NAME	=	my_defender
+
+TEST_NAME	=	unit_tests
+
+OBJECT	=	$(SRC:.c=.o)
+
+MAIN_OBJECT	=	$(MAIN:.c=.o)
+
+OBJECT_TEST	=	*.gcno	\
+				*.gcda	\
+				$(TEST_NAME)
+
+CC	=	gcc
+
+# CFLAGS	=	-I./includes/ -Wall -Wextra -Wshadow -L./lib/my/ -lmy
+
+LDFLAGS	=	-lcsfml-graphics -lcsfml-window -lcsfml-system -lcsfml-audio
+
+TFLAGS	=	--coverage -lcriterion
+
+all:	$(NAME)
+
+$(NAME): $(OBJECT) $(MAIN_OBJECT)
+	make -C
+	$(CC) -o $(NAME) $(OBJECT) $(MAIN_OBJECT) $(CFLAGS) $(LDFLAGS)
 
 clean:
-	make -C client/ clean
-	make -C server/ clean
-	rm clientJ2T3
-	rm serverJ2T3
+	make clean -C
+	$(RM) $(OBJECT)
+	$(RM) $(MAIN_OBJECT)
+	$(RM) *.gcda
+	$(RM) *.gcno
 
 fclean: clean
-	make -C server/ fclean
-	make -C client/ fclean
+	clear
+	make fclean -C
+	$(RM) $(NAME)
+	$(RM) $(TEST_NAME)
 
-re:	fclean all
+re:	fclean	all
 
-tests_run:
-	$(MAKE) -C tests/
-	./tests/tests_units_tests
+compile_test:
+	make -C
+	$(CC) -o $(TEST_NAME) $(SRC) $(TEST_SRC) $(TFLAGS) $(CFLAGS) $(LDFLAGS)
 
-.PHONY	:	all clean fclean re client server
+run_test:	fclean compile_test
+	./$(TEST_NAME)
+	gcovr --exclude tests
