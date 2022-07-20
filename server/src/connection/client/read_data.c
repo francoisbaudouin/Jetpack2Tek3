@@ -31,8 +31,9 @@ static void player_send_data(server_t *server, list_t *client)
 {
     element_t *p1;
     p1 = client->first;
-    dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
-        p1->player->pos_x, p1->player->pos_y, p1->player->score);
+    if (p1->player->ready)
+        dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
+            p1->player->pos_x, p1->player->pos_x, p1->player->score);
 }
 
 void read_data_player_command(server_t *server, list_t *client)
