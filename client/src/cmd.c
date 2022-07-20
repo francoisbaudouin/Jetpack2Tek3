@@ -9,7 +9,11 @@
 
 void player(client_t *client, char **str)
 {
-    printf("c\n");
+    for (size_t i = 0; str[i]; i++)
+    {
+        printf("%s\n", str[i]);
+    }
+    
     if (atoi(client->id) == atoi(str[1])) {
         printf("a\n");
         client->actual.x = atof(str[2]);

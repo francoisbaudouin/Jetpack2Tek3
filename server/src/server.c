@@ -36,7 +36,7 @@ static void player_send_data(list_t *client)
 {
     element_t *p1;
     //element_t *p2;
-
+    printf("send playaer data\n");
     // if (client->size != 2)
     //     return;
     p1 = client->first;

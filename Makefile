@@ -9,11 +9,11 @@ all: client server
 
 client:
 	make -C client/ all
-	cp client/clientJ2T3 ./
+	mv client/clientJ2T3 ./
 
 server:
 	make -C server/ all
-	cp server/serverJ2T3 ./
+	mv server/serverJ2T3 ./
 
 clean:
 	make -C client/ clean
