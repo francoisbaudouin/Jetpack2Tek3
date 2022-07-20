@@ -48,8 +48,5 @@ char **split_string_map(char **str, char *buffer, client_t *client)
         str[j][k] = buffer[i];
         k++;
     }
-    for (size_t i = 0; str[i]; i++) {
-        printf("%s\n", str[i]);
-    }
     return (str);
 }
