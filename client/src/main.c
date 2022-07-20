@@ -44,7 +44,7 @@ void init_player(player_t player)
     player.fire = false;
     player.height = 0;
     player.width = 0;
-    player.id = NULL;
+    player.id = 0;
     player.map = NULL;
     player.score = 0;
 }
