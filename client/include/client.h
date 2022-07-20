@@ -63,6 +63,7 @@ typedef struct client_s {
     fd_set rfds;
     pthread_t thread;
     struct player_s actual;
+    struct player_s enemy;
     struct window_s *actual_window;
     bool ready;
     bool fire;
