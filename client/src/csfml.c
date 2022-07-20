@@ -67,7 +67,6 @@ void draw_obstacle(window_t *windows, obstacle_t **obstacle)
 int game(client_t *client)
 {
     float seconds = 0.0;
-    client->actual_window = malloc(sizeof(window_t));
     // window_t *client->actual_window = malloc(sizeof(window_t));
     // // // game_object_t *game_object = malloc(sizeof(game_object_t));
     // background_t **background = malloc(sizeof(background_t *) * 4);

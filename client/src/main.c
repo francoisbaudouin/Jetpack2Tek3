@@ -39,6 +39,31 @@ int size_array(char **str)
 int main(int ac, char **av)
 {
     client_t *client = malloc(sizeof(client_t));
+    client->actual_window = malloc(sizeof(window_t));
+    client->actual.x = 0;
+    client->actual.y = 0;
+    client->actual.cells = 0;
+    client->actual.fire = false;
+    client->actual.height = 0;
+    client->actual.width = 0;
+    client->actual.id = NULL;
+    client->actual.map = NULL;
+    client->actual.score = 0;
+
+    client->enemy.x = 0;
+    client->enemy.y = 0;
+    client->enemy.cells = 0;
+    client->enemy.fire = false;
+    client->enemy.height = 0;
+    client->enemy.width = 0;
+    client->enemy.id = NULL;
+    client->enemy.map = NULL;
+    client->enemy.score = 0;
+
+    client->ip = NULL;
+    client->id = NULL;
+    client->fd = 0;
+    client->port = NULL;
     client->ready = false;
     client->fire = false;
     client->start = false;
