@@ -15,7 +15,7 @@ static void init_player(player_t *player, int id)
     player->money = 0;
     player->connected = true;
     player->ready = false;
-    player->active_jetpack = false;
+    player->jetpack = 0;
 }
 
 static player_t *add_player(server_t *server, int id)

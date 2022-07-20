@@ -7,13 +7,15 @@
 
 #include "command.h"
 
-void authentication(server_t *server, player_t *play)
+void authentication(server_t *server, player_t *play, char **str_command)
 {
+    (void) str_command;
     dprintf(play->socket_fd, "ID %d\n", play->id);
 }
 
-void map(server_t *server, player_t *play)
+void map(server_t *server, player_t *play, char **str_command)
 {
+    (void) str_command;
     char *str = calloc(server->map->width * server->map->high, sizeof(char));
 
     for (size_t i = 0; server->map->map[i] ; i++) {
@@ -22,17 +24,21 @@ void map(server_t *server, player_t *play)
     dprintf(play->socket_fd, "MAP %ld %ld %s \n", server->map->width, server->map->high, str);
 }
 
-void ready(server_t *server, player_t *play)
+void ready(server_t *server, player_t *play, char **str_command)
 {
+    (void) str_command;
     play->ready = true;
 }
 
-void fire(server_t *server, player_t *play)
+void fire(server_t *server, player_t *play, char **str_command)
 {
-    // int actived = atoi(stats);
-    // if (actived < 0)
-    //     return;
-    // if (actived > 1)
-    //     play->active_jetpack = true;
-    // play->active_jetpack = false;
+    sleep(1);
+    if (strcmp(str_command[1], "0") == 0) {
+        play->jetpack = false;
+        return;
+    }
+    if (strcmp(str_command[1], "1") == 0) {
+        play->jetpack = true;
+        return;
+    }
 }

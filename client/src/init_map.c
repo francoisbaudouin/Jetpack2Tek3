@@ -5,7 +5,7 @@
 ** init
 */
 
-#include "../my.h"
+#include "../include/client.h"
 
 void init_start(background_t *background)
 {

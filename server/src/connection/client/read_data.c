@@ -12,6 +12,7 @@
 static void exec_player_command(server_t *server, player_t *p,
     char *commands_player) 
 {
+    char **str_command;
     command_t commands[] = {
         {"ID\n", authentication},
         {"MAP\n", map},
@@ -19,9 +20,10 @@ static void exec_player_command(server_t *server, player_t *p,
         {"FIRE\n", fire},
         {0, NULL},
     };
+    str_command = split_string(str_command, commands_player, " ");
     for (int i = 0; commands[i].key != 0; i++) {
-        if (strcmp(commands_player, commands[i].key) == 0)
-            commands[i].ptr(server, p);
+        if (strcmp(str_command[0], commands[i].key) == 0)
+            commands[i].ptr(server, p, str_command);
     }
 }
 

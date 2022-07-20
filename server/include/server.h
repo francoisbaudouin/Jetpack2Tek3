@@ -32,7 +32,7 @@ typedef struct player_s {
     size_t pos_x;
     size_t pos_y;
     size_t money;
-    bool active_jetpack;
+    bool jetpack;
 } player_t;
 
 typedef struct map_s {
@@ -93,5 +93,8 @@ void running_server(server_t *server);
 
 /*connection client*/
 bool new_client_connection(server_t *server, list_t *client);
+
+/*command split string*/
+char **split_string(char **str, char *buffer, char *delimiter);
 
 #endif /* !SERVER_H_ */

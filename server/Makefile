@@ -13,8 +13,9 @@ MAIN	=	src/main.c \
 			src/error/setup_and_check_args.c \
 			src/error/verify_map.c \
 			src/list_chain_init.c \
-			src/server.c\
-			src/command/command.c
+			src/server.c \
+			src/command/command.c \
+			src/command/split_str.c \
 
 SRC	=
 
