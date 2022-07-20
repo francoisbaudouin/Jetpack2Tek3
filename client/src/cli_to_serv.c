@@ -34,10 +34,12 @@ void server_to_cli(client_t *client, fd_set wfds)
     if (FD_ISSET(client->fd, &wfds) && client->id == NULL) {
         dprintf(client->fd, "ID\n");
     }
-    if (FD_ISSET(client->fd, &wfds) && client->actual.map == NULL && client->id != NULL) {
+    if (FD_ISSET(client->fd, &wfds) && client->actual.map == NULL 
+        && client->id != NULL) {
         dprintf(client->fd, "MAP\n");
     }
-    if (FD_ISSET(client->fd, &wfds) && client->actual.map != NULL && client->id != NULL && client->ready == false) {
+    if (FD_ISSET(client->fd, &wfds) && client->actual.map != NULL 
+        && client->id != NULL && client->ready == false) {
         client->ready = true;
         dprintf(client->fd, "READY\n");
     }

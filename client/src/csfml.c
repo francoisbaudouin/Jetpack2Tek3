@@ -12,7 +12,8 @@ void event(window_t *windows, client_t *client)
     while (sfRenderWindow_pollEvent(windows->window, &windows->event)) {
         if (windows->event.type == sfEvtClosed)
             sfRenderWindow_close(windows->window);
-        if (windows->event.type == sfEvtKeyPressed && windows->event.key.code == sfKeySpace)
+        if (windows->event.type == sfEvtKeyPressed &&
+            windows->event.key.code == sfKeySpace)
             client->fire = true;
         else if (windows->event.type == sfEvtKeyReleased)
             client->fire = false;
