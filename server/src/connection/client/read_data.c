@@ -33,7 +33,7 @@ static void player_send_data(server_t *server, list_t *client)
 
     p1 = client->first;
     if (p1->player->ready)
-        dprintf(p1->player->socket_fd, "PLAYER %d %ld %ld %ld\n", p1->player->id, 
+        dprintf(p1->player->socket_fd, "PLAYER %d %d %d %ld\n", p1->player->id, 
             p1->player->pos_x, p1->player->pos_x, p1->player->score);
 }
 
@@ -49,7 +49,6 @@ void read_data_player_command(server_t *server, list_t *client)
             printf("Server, read error\n");
             return;
         }
-        printf("buffer: %s", buffer);
         if (FD_ISSET(tmp->player->socket_fd, &server->tmp_rfds))
             exec_player_command(server, tmp->player, buffer);
         if (FD_ISSET(tmp->player->socket_fd, &server->tmp_wfds))
