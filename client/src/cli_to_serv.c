@@ -52,6 +52,7 @@ int cli_to_serv(client_t *client)
     FD_SET(client->fd, &client->wfds);
     FD_SET(client->fd, &client->rfds);
 
+    game(client);
     while (1) {
         rfds_tmp = client->rfds;
         wfds_tmp = client->wfds;
@@ -61,7 +62,6 @@ int cli_to_serv(client_t *client)
         } else {
             reply_from_serv(client, wfds_tmp, rfds_tmp);
         }
-        game(client);
     }
     return (0);
 }
